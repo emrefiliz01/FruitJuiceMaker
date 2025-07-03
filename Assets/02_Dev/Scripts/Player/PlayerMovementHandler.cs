@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class PlayerMovementHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private float moveSpeed;
+
+    Animator animator;
+    Rigidbody rb;
+
     void Start()
     {
-        
+        animator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        bool isRunning = Input.GetKey(KeyCode.W);
+        animator.SetBool("isRunning", isRunning);
+
+        if (isRunning )
+        {
+            Vector3 moveForward = transform.forward * moveSpeed;
+            rb.velocity = moveForward;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 }
