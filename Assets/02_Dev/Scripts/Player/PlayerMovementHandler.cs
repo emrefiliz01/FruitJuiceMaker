@@ -6,32 +6,64 @@ public class PlayerMovementHandler : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private FloatingJoystick joystick;
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject playerModel;
 
-    Animator animator;
-    Rigidbody rb;
+    private Animator animator;
+    private Rigidbody rb;
+    private bool isRunning;
 
-    void Start()
+    private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
+        animator= playerModel.GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
+        Move();
+        Rotate();
+        ChangeAnimation();
+    }
+
+    private void Move()
+    {
         float horizontal = joystick.Horizontal;
         float vertical = joystick.Vertical;
 
-        Vector3 moveDirection = new Vector3 (horizontal, 0f, vertical);
+        Vector3 moveDirection = new Vector3(horizontal, 0f, vertical);
 
         rb.velocity = moveDirection * moveSpeed;
 
-        bool isRunning = (horizontal != 0f || vertical != 0f);
-        animator.SetBool("isRunning", isRunning);
+        if ((horizontal != 0f || vertical != 0f))
+        {
+            isRunning = true;
+        }
+        else
+        {
+            isRunning = false;
+        }
 
+    }
+
+    private void Rotate()
+    {
+        if (rb.velocity.magnitude > 0.1f)
+        {
+            playerModel.transform.rotation = Quaternion.LookRotation(rb.velocity);
+        }
+    }
+
+    private void ChangeAnimation()
+    {
         if (isRunning)
         {
-            playerTransform.rotation = Quaternion.LookRotation(rb.velocity);
+            animator.SetBool("isRunning", true);
+            animator.SetBool("isIdle", false);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+            animator.SetBool("isIdle", true);
         }
     }
 }
