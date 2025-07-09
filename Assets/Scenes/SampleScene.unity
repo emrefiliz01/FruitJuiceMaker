@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 225236921}
   - component: {fileID: 225236920}
   m_Layer: 0
-  m_Name: Bark|Leaf|Dupli|33 (1)
+  m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 274056907}
   - component: {fileID: 274056906}
   m_Layer: 0
-  m_Name: OrangePatchStage2
+  m_Name: Stage_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -533,12 +533,12 @@ Transform:
   m_GameObject: {fileID: 274056905}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: -8.5}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 958304477}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2004826917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &276554728
 PrefabInstance:
@@ -857,7 +857,7 @@ GameObject:
   - component: {fileID: 387181340}
   - component: {fileID: 387181339}
   m_Layer: 0
-  m_Name: LemonPatchStage3
+  m_Name: Stage_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -944,12 +944,12 @@ Transform:
   m_GameObject: {fileID: 387181338}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 0, z: -7.5}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1395626245}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2104116699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &390137948
 PrefabInstance:
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 435452276}
   - component: {fileID: 435452275}
   m_Layer: 0
-  m_Name: Bark|Leaf|Dupli|33 (3)
+  m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1209,7 +1209,7 @@ GameObject:
   - component: {fileID: 511341519}
   - component: {fileID: 511341518}
   m_Layer: 0
-  m_Name: LemonPatchStage2
+  m_Name: Stage_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1296,12 +1296,12 @@ Transform:
   m_GameObject: {fileID: 511341517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 0, z: -8.5}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: -4.062, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1748690449}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2104116699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &518868094
 PrefabInstance:
@@ -1600,7 +1600,7 @@ GameObject:
   - component: {fileID: 770031306}
   - component: {fileID: 770031305}
   m_Layer: 0
-  m_Name: OrangePatchStage1
+  m_Name: Stage_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1687,13 +1687,13 @@ Transform:
   m_GameObject: {fileID: 770031304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: -9.508}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 435452274}
   - {fileID: 2004404284}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2004826917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &958304477 stripped
 Transform:
@@ -1820,7 +1820,7 @@ GameObject:
   - component: {fileID: 1014432699}
   - component: {fileID: 1014432698}
   m_Layer: 0
-  m_Name: LemonPatchStage1
+  m_Name: Stage_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1907,13 +1907,13 @@ Transform:
   m_GameObject: {fileID: 1014432697}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 0, z: -9.508}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -4.07}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 225236919}
   - {fileID: 1021634818}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2104116699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1021634817
 GameObject:
@@ -1927,7 +1927,7 @@ GameObject:
   - component: {fileID: 1021634820}
   - component: {fileID: 1021634819}
   m_Layer: 0
-  m_Name: Bark|Leaf|Dupli|33 (2)
+  m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2148,9 +2148,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.54822433
-  m_Height: 5.2219934
+  m_Height: 4.7450767
   m_Direction: 1
-  m_Center: {x: -0.019896269, y: 2.1109967, z: 0}
+  m_Center: {x: -0.019896269, y: 2.349455, z: 0}
 --- !u!1 &1159081375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,7 +2966,7 @@ GameObject:
   - component: {fileID: 2004404286}
   - component: {fileID: 2004404285}
   m_Layer: 0
-  m_Name: Bark|Leaf|Dupli|33 (4)
+  m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3037,6 +3037,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004404283}
   m_Mesh: {fileID: -3147634971949748866, guid: 84a0ca5ff5af82c4a9285430d79d3139, type: 3}
+--- !u!1 &2004826916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2004826917}
+  m_Layer: 0
+  m_Name: OrangePatch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2004826917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004826916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.7, y: 0, z: -1.76}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 770031308}
+  - {fileID: 274056909}
+  - {fileID: 2128219966}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2015956257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3473,6 +3507,58 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb01cb8b80ee5ca4786bc183d2ff2a14, type: 3}
+--- !u!1 &2104116698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104116699}
+  - component: {fileID: 2104116700}
+  m_Layer: 0
+  m_Name: LemonPatch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2104116699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104116698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5.464}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1014432701}
+  - {fileID: 511341521}
+  - {fileID: 387181342}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2104116700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104116698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eabaab0b9951ae44b500bc6efc69b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitPatchSO: {fileID: 11400000, guid: a1b78c62124e8554cb8beb7cc4e10e9e, type: 2}
+  stageList:
+  - {fileID: 1014432697}
+  - {fileID: 511341517}
+  - {fileID: 387181338}
 --- !u!1001 &2115253937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3564,7 +3650,7 @@ GameObject:
   - component: {fileID: 2128219964}
   - component: {fileID: 2128219963}
   m_Layer: 0
-  m_Name: OrangePatchStage3
+  m_Name: Stage_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3651,12 +3737,12 @@ Transform:
   m_GameObject: {fileID: 2128219962}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: -7.5}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1669538567}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2004826917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4429296044958635441
 PrefabInstance:
@@ -3753,9 +3839,5 @@ SceneRoots:
   - {fileID: 1709253002}
   - {fileID: 2040822891}
   - {fileID: 518868094}
-  - {fileID: 1014432701}
-  - {fileID: 511341521}
-  - {fileID: 387181342}
-  - {fileID: 770031308}
-  - {fileID: 274056909}
-  - {fileID: 2128219966}
+  - {fileID: 2104116699}
+  - {fileID: 2004826917}
