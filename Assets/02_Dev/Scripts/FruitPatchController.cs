@@ -28,7 +28,7 @@ public class FruitPatchController : MonoBehaviour
         }
 
 
-        if (currentTimer > 0)
+        if (currentTimer > 0 && currentStage != stageList.Count)
         {
             currentTimer -= Time.deltaTime;
         }
