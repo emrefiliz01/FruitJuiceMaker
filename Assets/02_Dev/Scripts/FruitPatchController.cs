@@ -28,20 +28,21 @@ public class FruitPatchController : MonoBehaviour
         {
             currentStage = 1;
             StageReset();
+            SetTextStatus(true);
+            StartCoroutine(StartTimerCoroutine());
         }
 
+            //  if (currentTimer > 0 && currentStage != stageList.Count)
+            // {
+            //      currentTimer -= Time.deltaTime;
+            //  }
+            //  else
+            //  {
+            //     currentTimer = 0;
+            //   IncreaseFruitStage();
+            //}
 
-      //  if (currentTimer > 0 && currentStage != stageList.Count)
-      // {
-      //      currentTimer -= Time.deltaTime;
-      //  }
-      //  else
-      //  {
-       //     currentTimer = 0;
-         //   IncreaseFruitStage();
-        //}
-
-        timerText.text = currentTimer.ToString("F0");
+            timerText.text = currentTimer.ToString("F0");
     }
     
     private void IncreaseFruitStage()
@@ -50,18 +51,17 @@ public class FruitPatchController : MonoBehaviour
 
         currentStage += 1;
 
-        if (currentStage <= stageList.Count && currentStage != stageList.Count)
+        if (currentStage < stageList.Count)
         {
-            StageReset();
+            SetTextStatus(true);
         }
         else
         {
-            StageReset();
-
-            StopCoroutine(startTimerCoroutine);
-
-            timerText.gameObject.SetActive(false);
+            SetTextStatus(false);
+            StopCoroutine(startTimerCoroutine);     
         }
+
+        StageReset();
     }
     private IEnumerator StartTimerCoroutine()
     {
@@ -90,6 +90,10 @@ public class FruitPatchController : MonoBehaviour
         stageList[currentStage - 1].SetActive(true);
 
         currentTimer = fruitPatchSO.stageTimer;
-        timerText.gameObject.SetActive(true);
+    }
+
+    private void SetTextStatus(bool status)
+    {
+        timerText.gameObject.SetActive(status);
     }
 }
