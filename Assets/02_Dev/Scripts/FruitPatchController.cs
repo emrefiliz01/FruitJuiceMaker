@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class FruitPatchController : MonoBehaviour
 {
     [SerializeField] private FruitPatchSO fruitPatchSO;
     [SerializeField] private List<GameObject> stageList;
-    [SerializeField] private TextMeshPro timerText;
+    [SerializeField] private Image timerImage;
 
     private int currentStage;
     private float currentTimer;
@@ -28,21 +29,9 @@ public class FruitPatchController : MonoBehaviour
         {
             currentStage = 1;
             StageReset();
-            SetTextStatus(true);
+            SetImageStatus(true);
             StartCoroutine(StartTimerCoroutine());
-        }
-
-            //  if (currentTimer > 0 && currentStage != stageList.Count)
-            // {
-            //      currentTimer -= Time.deltaTime;
-            //  }
-            //  else
-            //  {
-            //     currentTimer = 0;
-            //   IncreaseFruitStage();
-            //}
-
-            timerText.text = currentTimer.ToString("F0");
+        }   
     }
     
     private void IncreaseFruitStage()
@@ -53,11 +42,11 @@ public class FruitPatchController : MonoBehaviour
 
         if (currentStage < stageList.Count)
         {
-            SetTextStatus(true);
+            SetImageStatus(true);
         }
         else
         {
-            SetTextStatus(false);
+            SetImageStatus(false);
             StopCoroutine(startTimerCoroutine);     
         }
 
@@ -67,9 +56,11 @@ public class FruitPatchController : MonoBehaviour
     {
         while (currentStage != stageList.Count)
         {
-            yield return new WaitForSeconds(1f);
+            yield return null;
 
-            currentTimer -= 1;
+            currentTimer -= Time.deltaTime;
+
+            SetTimerImageFillAmount();
 
             if (currentTimer <= 0)
             {
@@ -92,8 +83,21 @@ public class FruitPatchController : MonoBehaviour
         currentTimer = fruitPatchSO.stageTimer;
     }
 
-    private void SetTextStatus(bool status)
+    private void SetImageStatus(bool status)
     {
-        timerText.gameObject.SetActive(status);
+        timerImage.gameObject.SetActive(status);
+    }
+
+    private void SetTimerImageFillAmount()
+    {
+        if (currentTimer > 0)
+        {
+            float fillAmount = currentTimer / fruitPatchSO.stageTimer;
+            timerImage.fillAmount = fillAmount;
+        }
+        else
+        {
+            timerImage.fillAmount = 0f;
+        }
     }
 }
