@@ -13,15 +13,17 @@ public class FruitPatchController : MonoBehaviour
 
     private int currentStage;
     private float currentTimer;
-    private Coroutine startTimerCoroutine;
+    private Coroutine timerCoroutine;
+    private bool isReady = false;
 
     private void Start()
     {
         currentStage = 1;
 
-        StageReset();
+        ChangeStage();
+        ResetStage();
 
-        startTimerCoroutine = StartCoroutine(StartTimerCoroutine());
+        timerCoroutine = StartCoroutine(TimerCoroutine());
     }
 
     private void Update()
@@ -29,9 +31,9 @@ public class FruitPatchController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             currentStage = 1;
-            StageReset();
+            ChangeStage();
             SetImageStatus(true);
-            StartCoroutine(StartTimerCoroutine());
+            timerCoroutine = StartCoroutine(TimerCoroutine());
             SetFruitIconStatus(false);
         }   
     }
@@ -49,13 +51,14 @@ public class FruitPatchController : MonoBehaviour
         else
         {
             SetImageStatus(false);
-            StopCoroutine(startTimerCoroutine);   
+            StopCoroutine(timerCoroutine);   
             SetFruitIconStatus(true);
+            isReady = true;
         }
 
-        StageReset();
+        ChangeStage();
     }
-    private IEnumerator StartTimerCoroutine()
+    private IEnumerator TimerCoroutine()
     {
         while (currentStage != stageList.Count)
         {
@@ -74,7 +77,7 @@ public class FruitPatchController : MonoBehaviour
         yield return null;
     }
 
-    private void StageReset()
+    private void ChangeStage()
     {
         foreach (GameObject stage in stageList)
         {
@@ -108,5 +111,31 @@ public class FruitPatchController : MonoBehaviour
         fruitIcon.gameObject.SetActive(status);
 
         fruitIcon.sprite = fruitPatchSO.fruitImage;
+    }
+
+    public void CollectFruit()
+    {
+        if (isReady == true)
+        {
+            ResetStage();
+            SetImageStatus(true);
+            SetFruitIconStatus(false);
+            StartCoroutine(TimerCoroutine());      
+        }
+    }
+
+    private void ResetStage()
+    {
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+        }
+
+        currentStage = 1;
+        currentTimer = fruitPatchSO.stageTimer;
+
+        isReady = false;
+        SetFruitIconStatus(false);
+        ChangeStage();
     }
 }
