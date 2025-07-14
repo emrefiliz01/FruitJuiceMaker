@@ -11,4 +11,5 @@ public class FruitPatchSO : ScriptableObject
 
     public float stageTimer;
     public int spawnLimit;
+    public Sprite fruitImage;
 }

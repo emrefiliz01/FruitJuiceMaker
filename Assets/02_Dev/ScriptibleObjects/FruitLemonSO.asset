@@ -15,3 +15,4 @@ MonoBehaviour:
   fruitType: 0
   stageTimer: 3
   spawnLimit: 3
+  fruitImage: {fileID: 21300000, guid: 0eb902c0d5e2e3c478cb36617f966a27, type: 3}

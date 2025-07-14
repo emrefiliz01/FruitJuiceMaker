@@ -9,6 +9,7 @@ public class FruitPatchController : MonoBehaviour
     [SerializeField] private FruitPatchSO fruitPatchSO;
     [SerializeField] private List<GameObject> stageList;
     [SerializeField] private Image timerImage;
+    [SerializeField] private Image fruitIcon;
 
     private int currentStage;
     private float currentTimer;
@@ -31,6 +32,7 @@ public class FruitPatchController : MonoBehaviour
             StageReset();
             SetImageStatus(true);
             StartCoroutine(StartTimerCoroutine());
+            SetFruitIconStatus(false);
         }   
     }
     
@@ -47,7 +49,8 @@ public class FruitPatchController : MonoBehaviour
         else
         {
             SetImageStatus(false);
-            StopCoroutine(startTimerCoroutine);     
+            StopCoroutine(startTimerCoroutine);   
+            SetFruitIconStatus(true);
         }
 
         StageReset();
@@ -99,5 +102,11 @@ public class FruitPatchController : MonoBehaviour
         {
             timerImage.fillAmount = 0f;
         }
+    }
+    private void SetFruitIconStatus(bool status)
+    {
+        fruitIcon.gameObject.SetActive(status);
+
+        fruitIcon.sprite = fruitPatchSO.fruitImage;
     }
 }
