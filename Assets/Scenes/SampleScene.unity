@@ -2171,6 +2171,7 @@ MonoBehaviour:
   moveSpeed: 10
   joystick: {fileID: 1227545403}
   playerModel: {fileID: 269112013}
+  playerInteracton: {fileID: 1153044420}
 --- !u!54 &1153044416
 Rigidbody:
   m_ObjectHideFlags: 0

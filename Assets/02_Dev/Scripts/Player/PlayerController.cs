@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovementHandler : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private GameObject playerModel;
+    [SerializeField] private PlayerInteracton playerInteracton;
 
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
+
 
     private void Awake()
     {

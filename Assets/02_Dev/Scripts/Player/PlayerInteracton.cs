@@ -6,6 +6,7 @@ public class PlayerInteracton : MonoBehaviour
 {
 
     private FruitPatchController  fruitPatchController;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "FruitPatch")
@@ -19,6 +20,7 @@ public class PlayerInteracton : MonoBehaviour
         }
     }
 
+     
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "FruitPatch")
