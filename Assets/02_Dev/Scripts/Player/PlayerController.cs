@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
 
+    private FruitPatchController fruitPatchController;
+    
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
-
-
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -66,6 +67,32 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
             animator.SetBool("isIdle", true);
+        }
+    }
+
+    private void Update()
+    {
+        FruitPatchController fruitPatchController = playerInteracton.GetFruitPatchController();
+
+        if (CanCollectFruit())
+        {
+            fruitPatchController.CollectFruit();
+        }
+    }
+
+    private bool CanCollectFruit()
+    {
+        fruitPatchController = playerInteracton.GetFruitPatchController();
+
+        if (fruitPatchController != null && fruitPatchController.IsReady())
+        {
+            Debug.Log("true");
+            return true;
+        }
+        else
+        {
+            Debug.Log("false");
+            return false;
         }
     }
 }

@@ -14,7 +14,8 @@ public class FruitPatchController : MonoBehaviour
     private int currentStage;
     private float currentTimer;
     private Coroutine timerCoroutine;
-    private bool isReady = false;
+    private bool isReady;
+
 
     private void Start()
     {
@@ -115,13 +116,10 @@ public class FruitPatchController : MonoBehaviour
 
     public void CollectFruit()
     {
-        if (isReady == true)
-        {
-            ResetStage();
-            SetImageStatus(true);
-            SetFruitIconStatus(false);
-            StartCoroutine(TimerCoroutine());      
-        }
+        ResetStage();
+        SetImageStatus(true);
+        SetFruitIconStatus(false);
+        StartCoroutine(TimerCoroutine());      
     }
 
     private void ResetStage()
@@ -137,5 +135,10 @@ public class FruitPatchController : MonoBehaviour
         isReady = false;
         SetFruitIconStatus(false);
         ChangeStage();
+    }
+
+    public bool IsReady()
+    {
+        return isReady;
     }
 }

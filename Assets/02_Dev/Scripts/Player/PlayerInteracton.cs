@@ -12,11 +12,7 @@ public class PlayerInteracton : MonoBehaviour
         if (other.tag == "FruitPatch")
         {
             Debug.Log("You entered the fruit patch");
-
-            fruitPatchController = other.GetComponent<FruitPatchController>();
-
-         //   fruitPatchController.CollectFruit();
-
+            //   fruitPatchController.CollectFruit();
         }
     }
 
@@ -25,7 +21,7 @@ public class PlayerInteracton : MonoBehaviour
     {
         if (other.tag == "FruitPatch")
         {
-            Debug.Log("You exit the fruit patch");
+            fruitPatchController = null;
         }
     }
 
@@ -33,7 +29,11 @@ public class PlayerInteracton : MonoBehaviour
     {
         if (other.tag == "FruitPatch")
         {
-            fruitPatchController.CollectFruit();
+            fruitPatchController = other.GetComponent<FruitPatchController>();
         }
+    }
+    public FruitPatchController GetFruitPatchController()
+    {
+        return fruitPatchController;
     }
 }
