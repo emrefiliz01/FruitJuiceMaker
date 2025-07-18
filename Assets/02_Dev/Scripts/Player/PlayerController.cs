@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        FruitPatchController fruitPatchController = playerInteracton.GetFruitPatchController();
+        fruitPatchController = playerInteracton.GetFruitPatchController();
 
         if (CanCollectFruit())
         {
@@ -82,8 +82,6 @@ public class PlayerController : MonoBehaviour
 
     private bool CanCollectFruit()
     {
-        fruitPatchController = playerInteracton.GetFruitPatchController();
-
         if (fruitPatchController != null && fruitPatchController.IsReady())
         {
             Debug.Log("true");
