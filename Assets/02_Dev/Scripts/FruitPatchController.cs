@@ -141,4 +141,9 @@ public class FruitPatchController : MonoBehaviour
     {
         return isReady;
     }
+
+    public FruitPatchSO GetFruitPatchSO()
+    {
+        return fruitPatchSO;
+    }
 }

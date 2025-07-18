@@ -8,17 +8,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
+    [SerializeField] private GameObject fruitSpawnerContainer;
 
     private FruitPatchController fruitPatchController;
+    private FruitPatchSO fruitPatchSO;
+
     
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
+    public bool isHolding;
+
+    public List<GameObject> collectedFruits = new List<GameObject>();
+    private Transform fruitSpawnPosition;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator= playerModel.GetComponent<Animator>();
+
+        fruitSpawnPosition = playerModel.transform;
     }
 
     void FixedUpdate()
@@ -58,6 +67,16 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeAnimation()
     {
+        if (isHolding)
+        {
+            animator.SetBool("isHolding", true);
+        }
+        else
+        {
+           // animator.SetBool("isHolding", false);
+        }
+
+
         if (isRunning)
         {
             animator.SetBool("isRunning", true);
@@ -77,6 +96,11 @@ public class PlayerController : MonoBehaviour
         if (CanCollectFruit())
         {
             fruitPatchController.CollectFruit();
+
+            if (CanSpawnFruit())
+            {
+                isHolding = true;
+            }
         }
     }
 
@@ -84,12 +108,33 @@ public class PlayerController : MonoBehaviour
     {
         if (fruitPatchController != null && fruitPatchController.IsReady())
         {
-            Debug.Log("true");
             return true;
         }
         else
         {
-            Debug.Log("false");
+            return false;
+        }
+    }
+
+
+    private bool CanSpawnFruit()
+    {
+        fruitPatchSO = fruitPatchController.GetFruitPatchSO();
+
+        int spawnLimit = fruitPatchSO.spawnLimit;
+
+        if (fruitPatchSO != null && collectedFruits.Count < spawnLimit)
+        {
+            GameObject fruitSpawn = Instantiate(fruitPatchSO.fruitPrefab, fruitSpawnerContainer.transform.position + new Vector3(0, 1 * collectedFruits.Count, 0), Quaternion.identity);
+
+            fruitSpawn.transform.SetParent(fruitSpawnerContainer.transform);
+
+            collectedFruits.Add(fruitSpawn);
+
+            return true;
+        }
+        else
+        {
             return false;
         }
     }
