@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
     [SerializeField] private GameObject fruitSpawnerContainer;
+    [SerializeField] private Grinder grinder;
 
     private FruitPatchController fruitPatchController;
     private FruitPatchSO fruitPatchSO;
-
     
+
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
@@ -101,6 +102,11 @@ public class PlayerController : MonoBehaviour
             {
                 isHolding = true;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y) && grinder != null && collectedFruits.Count > 0)
+        {
+            grinder.StartGrinder();
         }
     }
 

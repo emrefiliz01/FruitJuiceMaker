@@ -119,7 +119,7 @@ public class FruitPatchController : MonoBehaviour
         ResetStage();
         SetImageStatus(true);
         SetFruitIconStatus(false);
-        StartCoroutine(TimerCoroutine());      
+        StartCoroutine(TimerCoroutine());
     }
 
     private void ResetStage()
