@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - FruitPatch
+  - GrinderSpot
   layers:
   - Default
   - TransparentFX

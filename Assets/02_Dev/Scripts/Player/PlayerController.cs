@@ -9,16 +9,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
     [SerializeField] private GameObject fruitSpawnerContainer;
-    [SerializeField] private Grinder grinder;
+    [SerializeField] private GrinderController grinderController;
 
     private FruitPatchController fruitPatchController;
     private FruitPatchSO fruitPatchSO;
+    private GrinderSO grinderSO;
     
 
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
     public bool isHolding;
+
 
     public List<GameObject> collectedFruits = new List<GameObject>();
     private Transform fruitSpawnPosition;
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-           // animator.SetBool("isHolding", false);
+            animator.SetBool("isHolding", false);
         }
 
 
@@ -93,6 +95,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         fruitPatchController = playerInteracton.GetFruitPatchController();
+        grinderController = playerInteracton.GetGrinderController();
 
         if (CanCollectFruit())
         {
@@ -104,13 +107,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Y) && grinder != null && collectedFruits.Count > 0)
+        if (CanGrindFruit())
         {
-            grinder.StartGrinder();
+            grinderController.StartGrinder();
+
+            isHolding = false;
         }
+        
     }
 
-    private bool CanCollectFruit()
+    private bool CanCollectFruit()  
     {
         if (fruitPatchController != null && fruitPatchController.IsReady())
         {
@@ -137,6 +143,18 @@ public class PlayerController : MonoBehaviour
 
             collectedFruits.Add(fruitSpawn);
 
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool CanGrindFruit()
+    {
+        if (grinderController != null && collectedFruits.Count > 0 && !grinderController.IsGrinding())
+        {
             return true;
         }
         else
