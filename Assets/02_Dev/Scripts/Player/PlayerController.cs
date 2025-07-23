@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CanGrindFruit()
     {
-        if (grinderController != null && collectedFruits.Count > 0 && !grinderController.IsGrinding())
+        if (grinderController != null && collectedFruits.Count > 0 && grinderController.CanAddFruit())
         {
             return true;
         }
