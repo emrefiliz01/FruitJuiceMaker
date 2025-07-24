@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a9124a467689564da6b91488c932425, type: 3}
-  m_Name: GrinderSO
+  m_Script: {fileID: 11500000, guid: c7e473bac446f7745a2c1489a2d382d4, type: 3}
+  m_Name: JuiceMakerSO
   m_EditorClassIdentifier: 
-  grindingTime: 5
-  grinderCapacity: 1000
-  grindedFruitBowlCapacity: 3
+  juiceMakingTime: 5
+  juiceMakerCapacity: 3

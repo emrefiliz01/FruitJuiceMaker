@@ -10,6 +10,8 @@ public class GrinderController : MonoBehaviour
     [SerializeField] private Image grinderTimerImage;
     [SerializeField] private GameObject grindedFruitBowlPrefab;
     [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
+    [SerializeField] private GameObject grindedFruitSpawnerContainer;
+    [SerializeField] private TextMesh grinderFruitCountText;
 
     private bool isGrinding;
     private Coroutine grinderCoroutine;
@@ -21,8 +23,32 @@ public class GrinderController : MonoBehaviour
     {
         isGrinding = false;
     }
+
+    private void Update()
+    {
+        GrinderFruitCountText();
+    }
+
     public void StartGrinder()
     {
+        if (grindedFruitBowlList.Count == grinderSO.grindedFruitBowlCapacity)
+        {
+            ResetGrinder();
+
+            foreach (var fruit in playerController.collectedFruits)
+            {
+                grinderFruitsList.Add(fruit);
+            }
+
+            foreach (var fruit in playerController.collectedFruits)
+            {
+
+                Destroy(fruit);
+            }
+            playerController.collectedFruits.Clear();
+            return;
+        }
+
         isGrinding = true;
 
         SetImageStatus(true);
@@ -41,8 +67,6 @@ public class GrinderController : MonoBehaviour
         }
 
         playerController.collectedFruits.Clear();
-
-        Debug.Log(fruitCount + " fruitss removed");
 
         grinderCoroutine = StartCoroutine(GrinderTimerCoroutine());
     }
@@ -115,7 +139,7 @@ public class GrinderController : MonoBehaviour
 
     public bool CanCreateGrindedFruit()
     {
-        if (grindedFruitBowlList.Count < grinderSO.grinderCapacity)
+        if (grindedFruitBowlList.Count < grinderSO.grindedFruitBowlCapacity)
         {
             GameObject grindedFruit = Instantiate(grindedFruitBowlPrefab, grindedFruitBowlSpawnPoint.transform.position + new Vector3(0, 0, 1 * grindedFruitBowlList.Count), Quaternion.identity);
 
@@ -131,5 +155,10 @@ public class GrinderController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private void GrinderFruitCountText()
+    {
+        grinderFruitCountText.text = grinderFruitsList.Count.ToString();
     }
 }

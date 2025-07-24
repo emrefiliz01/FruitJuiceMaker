@@ -28,7 +28,6 @@ public class PlayerInteracton : MonoBehaviour
         {
             Debug.Log("You entered thee grinded fruit table spot");
             grinderController = other.GetComponent<GrinderController>();
-            // grinderController.StartGrinder();
         }
     }
      

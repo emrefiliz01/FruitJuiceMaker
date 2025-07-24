@@ -8,4 +8,5 @@ public class GrinderSO : ScriptableObject
 {
     public float grindingTime;
     public int grinderCapacity;
+    public int grindedFruitBowlCapacity;
 }

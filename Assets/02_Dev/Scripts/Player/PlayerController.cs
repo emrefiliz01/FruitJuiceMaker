@@ -113,7 +113,6 @@ public class PlayerController : MonoBehaviour
 
             isHolding = false;
         }
-        
     }
 
     private bool CanCollectFruit()  
