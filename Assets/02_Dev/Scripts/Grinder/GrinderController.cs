@@ -8,13 +8,14 @@ public class GrinderController : MonoBehaviour
     [SerializeField] GrinderSO grinderSO;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Image grinderTimerImage;
-    [SerializeField] private GameObject grindedFruitPrefab;
-    [SerializeField] private GameObject grindedFruitSpawnPoint;
+    [SerializeField] private GameObject grindedFruitBowlPrefab;
+    [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
 
     private bool isGrinding;
     private Coroutine grinderCoroutine;
 
     public List<GameObject> grinderFruitsList;
+    public List<GameObject> grindedFruitBowlList;
 
     private void Start()
     {
@@ -68,7 +69,7 @@ public class GrinderController : MonoBehaviour
             {
                 grinderFruitsList.RemoveAt(0);
 
-                CreateGrindedFruit();
+                CanCreateGrindedFruit();
 
                 currentGrinderTimer = grinderSO.grindingTime;
             }
@@ -112,12 +113,23 @@ public class GrinderController : MonoBehaviour
         }
     }
 
-    public void CreateGrindedFruit()
+    public bool CanCreateGrindedFruit()
     {
-        GameObject grindedFruit = Instantiate(grindedFruitPrefab, grindedFruitSpawnPoint.transform.transform.position, Quaternion.identity);
+        if (grindedFruitBowlList.Count < grinderSO.grinderCapacity)
+        {
+            GameObject grindedFruit = Instantiate(grindedFruitBowlPrefab, grindedFruitBowlSpawnPoint.transform.position + new Vector3(0, 0, 1 * grindedFruitBowlList.Count), Quaternion.identity);
 
-        grindedFruit.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+            grindedFruit.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 
-        grindedFruit.transform.SetParent(grindedFruitSpawnPoint.transform);
+            grindedFruit.transform.SetParent(grindedFruitBowlSpawnPoint.transform);
+
+            grindedFruitBowlList.Add(grindedFruit);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

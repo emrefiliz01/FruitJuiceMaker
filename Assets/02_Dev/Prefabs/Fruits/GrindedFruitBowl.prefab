@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1629378768018467212}
   - component: {fileID: 2244312388513954122}
   m_Layer: 0
-  m_Name: GrindedFruit
+  m_Name: GrindedFruitBowl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

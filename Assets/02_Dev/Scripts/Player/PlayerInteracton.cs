@@ -23,6 +23,13 @@ public class PlayerInteracton : MonoBehaviour
             grinderController = other.GetComponent<GrinderController>();
             // grinderController.StartGrinder();
         }
+
+        if (other.tag == "GrindedFruitTableSpot")
+        {
+            Debug.Log("You entered thee grinded fruit table spot");
+            grinderController = other.GetComponent<GrinderController>();
+            // grinderController.StartGrinder();
+        }
     }
      
     private void OnTriggerExit(Collider other)
@@ -33,6 +40,11 @@ public class PlayerInteracton : MonoBehaviour
         }
 
         if (other.tag == "GrinderSpot")
+        {
+            grinderController = null;
+        }
+
+        if (other.tag == "GrindedFruitTableSpot")
         {
             grinderController = null;
         }
