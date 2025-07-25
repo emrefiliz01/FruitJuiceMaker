@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public bool isHolding;
 
 
-    public List<GameObject> collectedFruits = new List<GameObject>();
+    public List<GameObject> collectedFruitList = new List<GameObject>();
     private Transform fruitSpawnPosition;
     
     private void Awake()
@@ -109,7 +109,9 @@ public class PlayerController : MonoBehaviour
 
         if (CanGrindFruit())
         {
+            grinderController.AddFruitIntoGrinder(collectedFruitList);
             grinderController.StartGrinder();
+            DestroyAndClearFruitList();
 
             isHolding = false;
         }
@@ -134,13 +136,13 @@ public class PlayerController : MonoBehaviour
 
         int spawnLimit = fruitPatchSO.spawnLimit;
 
-        if (fruitPatchSO != null && collectedFruits.Count < spawnLimit)
+        if (fruitPatchSO != null && collectedFruitList.Count < spawnLimit)
         {
-            GameObject fruitSpawn = Instantiate(fruitPatchSO.fruitPrefab, fruitSpawnerContainer.transform.position + new Vector3(0, 1 * collectedFruits.Count, 0), Quaternion.identity);
+            GameObject fruitSpawn = Instantiate(fruitPatchSO.fruitPrefab, fruitSpawnerContainer.transform.position + new Vector3(0, 1 * collectedFruitList.Count, 0), Quaternion.identity);
 
             fruitSpawn.transform.SetParent(fruitSpawnerContainer.transform);
 
-            collectedFruits.Add(fruitSpawn);
+            collectedFruitList.Add(fruitSpawn);
 
             return true;
         }
@@ -152,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CanGrindFruit()
     {
-        if (grinderController != null && collectedFruits.Count > 0 && grinderController.CanAddFruit())
+        if (grinderController != null && collectedFruitList.Count > 0 && grinderController.CanAddFruit())
         {
             return true;
         }
@@ -160,5 +162,15 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private void DestroyAndClearFruitList()
+    {
+        foreach (var fruit in collectedFruitList)
+        {
+            Destroy(fruit);
+        }
+
+        collectedFruitList.Clear();
     }
 }

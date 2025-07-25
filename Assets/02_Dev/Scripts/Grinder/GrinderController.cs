@@ -22,53 +22,28 @@ public class GrinderController : MonoBehaviour
     private void Start()
     {
         isGrinding = false;
+        GrinderFruitCountText();
     }
 
     private void Update()
     {
-        GrinderFruitCountText();
+        
     }
-
     public void StartGrinder()
     {
         if (grindedFruitBowlList.Count == grinderSO.grindedFruitBowlCapacity)
         {
             ResetGrinder();
-
-            foreach (var fruit in playerController.collectedFruits)
-            {
-                grinderFruitsList.Add(fruit);
-            }
-
-            foreach (var fruit in playerController.collectedFruits)
-            {
-
-                Destroy(fruit);
-            }
-            playerController.collectedFruits.Clear();
             return;
         }
-
+        
         isGrinding = true;
-
         SetImageStatus(true);
-            
-        int fruitCount = playerController.collectedFruits.Count;
-
-        foreach (var fruit in playerController.collectedFruits)
-        {
-            grinderFruitsList.Add(fruit);
-        }
-
-        foreach (var fruit in playerController.collectedFruits)
-        {
-            
-            Destroy(fruit);
-        }
-
-        playerController.collectedFruits.Clear();
-
+        
+        
         grinderCoroutine = StartCoroutine(GrinderTimerCoroutine());
+       
+
     }
 
     private IEnumerator GrinderTimerCoroutine()
@@ -87,6 +62,8 @@ public class GrinderController : MonoBehaviour
 
                 grinderTimerImage.fillAmount = fillAmount;
 
+                GrinderFruitCountText();
+
                 yield return null;
             }
             else
@@ -96,6 +73,8 @@ public class GrinderController : MonoBehaviour
                 CanCreateGrindedFruit();
 
                 currentGrinderTimer = grinderSO.grindingTime;
+
+                
             }
         }
         ResetGrinder();
@@ -121,6 +100,8 @@ public class GrinderController : MonoBehaviour
         grinderTimerImage.fillAmount = 1f;
 
         isGrinding = false;
+
+        GrinderFruitCountText();
 
         StopCoroutine(grinderCoroutine);
     }
@@ -149,6 +130,8 @@ public class GrinderController : MonoBehaviour
 
             grindedFruitBowlList.Add(grindedFruit);
 
+            IsTableFull();
+
             return true;
         }
         else
@@ -160,5 +143,26 @@ public class GrinderController : MonoBehaviour
     private void GrinderFruitCountText()
     {
         grinderFruitCountText.text = grinderFruitsList.Count.ToString();
+    }
+
+    public void AddFruitIntoGrinder(List<GameObject> collectedFruitList)
+    {
+        foreach (var fruit in collectedFruitList)
+        {
+            grinderFruitsList.Add(fruit);
+        }
+    }
+
+    private bool IsTableFull()
+    {
+        if (grindedFruitBowlList.Count == grinderSO.grindedFruitBowlCapacity)
+        {
+            ResetGrinder();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
