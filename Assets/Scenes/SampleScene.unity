@@ -1397,7 +1397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 537714743}
   m_Layer: 0
-  m_Name: FruitSpawnerContainer
+  m_Name: FruitContainer
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2169,8 +2169,9 @@ MonoBehaviour:
   joystick: {fileID: 1227545403}
   playerModel: {fileID: 269112013}
   playerInteracton: {fileID: 1153044420}
-  fruitSpawnerContainer: {fileID: 537714742}
+  fruitContainer: {fileID: 537714742}
   grinderController: {fileID: 54064612}
+  lemonPatch: {fileID: 2104116698}
   isHolding: 0
   collectedFruitList: []
 --- !u!54 &1153044416
@@ -3873,7 +3874,6 @@ MonoBehaviour:
   - {fileID: 387181338}
   timerImage: {fileID: 1011508064}
   fruitIcon: {fileID: 1638911991}
-  fruitSpawnerContainer: {fileID: 537714742}
 --- !u!65 &2104116701
 BoxCollider:
   m_ObjectHideFlags: 0

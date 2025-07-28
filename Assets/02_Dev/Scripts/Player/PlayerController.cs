@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,13 +9,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
-    [SerializeField] private GameObject fruitSpawnerContainer;
+    [SerializeField] private GameObject fruitContainer;
     [SerializeField] private GrinderController grinderController;
+    [SerializeField] private GameObject lemonPatch;
 
     private FruitPatchController fruitPatchController;
     private FruitPatchSO fruitPatchSO;
     private GrinderSO grinderSO;
-    
+
+    private Coroutine collectFruitCoroutine;
 
     private Animator animator;
     private Rigidbody rb;
@@ -138,11 +141,7 @@ public class PlayerController : MonoBehaviour
 
         if (fruitPatchSO != null && collectedFruitList.Count < spawnLimit)
         {
-            GameObject fruitSpawn = Instantiate(fruitPatchSO.fruitPrefab, fruitSpawnerContainer.transform.position + new Vector3(0, 1 * collectedFruitList.Count, 0), Quaternion.identity);
-
-            fruitSpawn.transform.SetParent(fruitSpawnerContainer.transform);
-
-            collectedFruitList.Add(fruitSpawn);
+            collectFruitCoroutine = StartCoroutine(CollectFruitCoroutine());
 
             return true;
         }
@@ -172,5 +171,30 @@ public class PlayerController : MonoBehaviour
         }
 
         collectedFruitList.Clear();
+    }
+
+    private IEnumerator CollectFruitCoroutine()
+    {
+        bool isCollected = false;
+
+        Vector3 startPos = lemonPatch.transform.position + new Vector3(0, 0.5f, 0);
+        Vector3 localEndPos = new Vector3(0, collectedFruitList.Count * 1f, 0);
+
+        GameObject fruit = Instantiate(fruitPatchSO.fruitPrefab, startPos, Quaternion.identity);
+
+        fruit.transform.SetParent(fruitContainer.transform);
+
+        collectedFruitList.Add(fruit);
+        
+        fruit.transform.DOLocalMove(localEndPos, 2f).SetEase(Ease.OutQuart).OnComplete(() =>
+        {
+            isCollected = true;
+        });
+
+        while (!isCollected)
+        {
+            localEndPos = fruitContainer.transform.position + new Vector3(0, collectedFruitList.Count * 1, 0);
+            yield return null;
+        }
     }
 }
