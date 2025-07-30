@@ -15,6 +15,7 @@ public class GrinderController : MonoBehaviour
 
     private bool isGrinding;
     private Coroutine grinderCoroutine;
+    private Coroutine grinderProcessCoroutine;
 
     public List<GameObject> grinderFruitsList;
     public List<GameObject> grindedFruitBowlList;
@@ -37,13 +38,14 @@ public class GrinderController : MonoBehaviour
             return;
         }
         
+        if (isGrinding)
+        {
+            return;
+        }
         isGrinding = true;
         SetImageStatus(true);
         
-        
         grinderCoroutine = StartCoroutine(GrinderTimerCoroutine());
-       
-
     }
 
     private IEnumerator GrinderTimerCoroutine()
@@ -108,14 +110,7 @@ public class GrinderController : MonoBehaviour
 
     public bool CanAddFruit()
     {
-        if (grinderFruitsList.Count < grinderSO.grinderCapacity)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return grinderFruitsList.Count < grinderSO.grinderCapacity;
     }
 
     public bool CanCreateGrindedFruit()
@@ -140,17 +135,9 @@ public class GrinderController : MonoBehaviour
         }
     }
 
-    private void GrinderFruitCountText()
+    public void GrinderFruitCountText()
     {
         grinderFruitCountText.text = grinderFruitsList.Count.ToString();
-    }
-
-    public void AddFruitIntoGrinder(List<GameObject> collectedFruitList)
-    {
-        foreach (var fruit in collectedFruitList)
-        {
-            grinderFruitsList.Add(fruit);
-        }
     }
 
     private bool IsTableFull()
@@ -165,4 +152,27 @@ public class GrinderController : MonoBehaviour
             return false;
         }
     }
+
+    public void AddFruit(GameObject fruit)
+    {
+        if (CanAddFruit())
+        {
+            grinderFruitsList.Add(fruit);
+
+            GrinderFruitCountText();
+        }
+    }
+
+    private void CollectGrindedFruitBowl()
+    {
+        if (grindedFruitBowlList.Count > 0)
+        {
+            GameObject lastGrindedFruit = grindedFruitBowlList[grindedFruitBowlList.Count- 1];
+
+            lastGrindedFruit.SetActive(false);
+
+            grindedFruitBowlList.RemoveAt(grindedFruitBowlList.Count- 1);
+        }
+    }
+    
 }

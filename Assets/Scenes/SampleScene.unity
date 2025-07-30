@@ -2172,6 +2172,8 @@ MonoBehaviour:
   fruitContainer: {fileID: 537714742}
   grinderController: {fileID: 54064612}
   lemonPatch: {fileID: 2104116698}
+  grinder: {fileID: 1175390571}
+  grinderOffSet: {x: 0, y: 1, z: 0}
   isHolding: 0
   collectedFruitList: []
 --- !u!54 &1153044416

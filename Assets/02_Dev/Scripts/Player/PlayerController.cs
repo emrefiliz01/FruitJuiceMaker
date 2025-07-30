@@ -12,10 +12,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject fruitContainer;
     [SerializeField] private GrinderController grinderController;
     [SerializeField] private GameObject lemonPatch;
+    [SerializeField] private GameObject grinder;
+    [SerializeField] private Vector3 grinderOffSet;
 
     private FruitPatchController fruitPatchController;
     private FruitPatchSO fruitPatchSO;
     private GrinderSO grinderSO;
+    private bool isAddFruitIntoGrinderCoroutineRunning;
+    private Coroutine addFruitIntoGrinderCoroutine;
 
     private Coroutine collectFruitCoroutine;
 
@@ -112,17 +116,14 @@ public class PlayerController : MonoBehaviour
 
         if (CanGrindFruit())
         {
-            grinderController.AddFruitIntoGrinder(collectedFruitList);
-            grinderController.StartGrinder();
-            DestroyAndClearFruitList();
-
+            addFruitIntoGrinderCoroutine = StartCoroutine(AddFruitIntoGrinderCoroutine());
             isHolding = false;
         }
     }
 
     private bool CanCollectFruit()  
     {
-        if (fruitPatchController != null && fruitPatchController.IsReady())
+        if (fruitPatchController != null && fruitPatchController.IsReady() && isAddFruitIntoGrinderCoroutineRunning == false)
         {
             return true;
         }
@@ -178,7 +179,7 @@ public class PlayerController : MonoBehaviour
         bool isCollected = false;
 
         Vector3 startPos = lemonPatch.transform.position + new Vector3(0, 0.5f, 0);
-        Vector3 localEndPos = new Vector3(0, collectedFruitList.Count * 1f, 0);
+        Vector3 localEndPos =  new Vector3(0, collectedFruitList.Count * 1f, 0);
 
         GameObject fruit = Instantiate(fruitPatchSO.fruitPrefab, startPos, Quaternion.identity);
 
@@ -196,5 +197,43 @@ public class PlayerController : MonoBehaviour
             localEndPos = fruitContainer.transform.position + new Vector3(0, collectedFruitList.Count * 1, 0);
             yield return null;
         }
+    }
+
+    public IEnumerator AddFruitIntoGrinderCoroutine()
+    {
+        if (collectedFruitList.Count > 0 && !isAddFruitIntoGrinderCoroutineRunning)
+        {
+            isAddFruitIntoGrinderCoroutineRunning = true;
+
+            Vector3 grinderPosition = grinder.transform.position + grinderOffSet;
+
+            GrinderController tempGrinderController = grinderController;
+
+            while (collectedFruitList.Count > 0 && grinderController != null)
+            {
+                GameObject lastFruit = collectedFruitList[collectedFruitList.Count - 1];
+
+                if (tempGrinderController != null)
+                {
+                    if (tempGrinderController.CanAddFruit())
+                    {
+                        lastFruit.transform.DOMove(grinderPosition, 1f).SetEase(Ease.OutQuart).OnComplete(() =>
+                        {
+                            tempGrinderController.AddFruit(lastFruit);
+                                      
+                            tempGrinderController.StartGrinder();
+
+                            collectedFruitList.RemoveAt(collectedFruitList.Count - 1);
+
+                            Destroy(lastFruit);;
+                        });
+                    }
+                    yield return new WaitForSeconds(1f);
+                }
+                yield return null;
+            }
+
+            isAddFruitIntoGrinderCoroutineRunning = false;
+        }     
     }
 }
