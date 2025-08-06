@@ -7,6 +7,9 @@ public class PlayerInteracton : MonoBehaviour
 
     private FruitPatchController  fruitPatchController;
     private GrinderController grinderController;
+    private PlayerController playerController;
+    private GrindedFruitController grindedFruitController;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,13 +30,14 @@ public class PlayerInteracton : MonoBehaviour
         if (other.tag == "GrindedFruitTableSpot")
         {
             Debug.Log("You entered thee grinded fruit table spot");
-            grinderController = other.GetComponent<GrinderController>();
+            grindedFruitController = other.GetComponent <GrindedFruitController>();
+              //  grindedFruitController.CreateGrindedFruit();
         }
-
+        
 
     }
      
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.tag == "FruitPatch")
         {
@@ -47,8 +51,13 @@ public class PlayerInteracton : MonoBehaviour
 
         if (other.tag == "GrindedFruitTableSpot")
         {
-            grinderController = null;
+            grindedFruitController = null;
         }
+    }
+
+    public GrindedFruitController GetGrindedFruitController()
+    {
+        return grindedFruitController;
     }
 
     public FruitPatchController GetFruitPatchController()

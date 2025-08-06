@@ -14,4 +14,5 @@ public class FruitPatchSO : ScriptableObject
     public Sprite fruitImage;
 
     public GameObject fruitPrefab;
+    public GameObject grindedFruitPrefab;
 }

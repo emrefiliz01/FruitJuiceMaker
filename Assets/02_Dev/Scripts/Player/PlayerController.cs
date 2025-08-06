@@ -12,9 +12,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject fruitContainer;
     [SerializeField] private GrinderController grinderController;
     [SerializeField] private GameObject lemonPatch;
+    [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
     [SerializeField] private GameObject grinder;
     [SerializeField] private Vector3 grinderOffSet;
+    [SerializeField] private GameObject grindedFruitContainer;
+    [SerializeField] private GrindedFruitController grindedFruitController;
+    [SerializeField] private List<GameObject> collectedGrindedFruitList = new List<GameObject>();
+    [SerializeField] private GrindedFruitSO grindedFruitSO;
 
+    private PlayerController playerController;
     private FruitPatchController fruitPatchController;
     private FruitPatchSO fruitPatchSO;
     private GrinderSO grinderSO;
@@ -22,21 +28,22 @@ public class PlayerController : MonoBehaviour
     private Coroutine addFruitIntoGrinderCoroutine;
 
     private Coroutine collectFruitCoroutine;
+    private Coroutine collectGrindedFruitCoroutine;
 
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
     public bool isHolding;
 
+    public List<GameObject> collectedFruitList;
 
-    public List<GameObject> collectedFruitList = new List<GameObject>();
     private Transform fruitSpawnPosition;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator= playerModel.GetComponent<Animator>();
-
+        
         fruitSpawnPosition = playerModel.transform;
     }
 
@@ -101,9 +108,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        grindedFruitController = playerInteracton.GetGrindedFruitController();
         fruitPatchController = playerInteracton.GetFruitPatchController();
         grinderController = playerInteracton.GetGrinderController();
-
+        
         if (CanCollectFruit())
         {
             fruitPatchController.CollectFruit();
@@ -118,6 +126,11 @@ public class PlayerController : MonoBehaviour
         {
             addFruitIntoGrinderCoroutine = StartCoroutine(AddFruitIntoGrinderCoroutine());
             isHolding = false;
+        }
+
+        if (CanCollectGrindedFruit())
+        {
+            collectGrindedFruitCoroutine = StartCoroutine(CollectGrindedFruitCoroutine());
         }
     }
 
@@ -225,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
                             collectedFruitList.RemoveAt(collectedFruitList.Count - 1);
 
-                            Destroy(lastFruit);;
+                            Destroy(lastFruit);
                         });
                     }
                     yield return new WaitForSeconds(1f);
@@ -235,5 +248,52 @@ public class PlayerController : MonoBehaviour
 
             isAddFruitIntoGrinderCoroutineRunning = false;
         }     
+    }
+
+    public bool CanCollectGrindedFruit()
+    {
+        if (grindedFruitController != null && grindedFruitController.grindedFruitBowlList.Count > 0 && collectedFruitList.Count <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public IEnumerator CollectGrindedFruitCoroutine()
+    {
+        while (collectedGrindedFruitList.Count < grindedFruitSO.grindedFruitCapacity)
+        {
+            if (CanCollectGrindedFruit())
+            {
+                GameObject lastGrindedFruitBowl = grindedFruitController.grindedFruitBowlList[grindedFruitController.grindedFruitBowlList.Count - 1];
+
+                Vector3 endPos = grindedFruitContainer.transform.position + new Vector3(0, collectedGrindedFruitList.Count * 1f, 0);
+
+                lastGrindedFruitBowl.transform.SetParent(grindedFruitContainer.transform);
+
+                lastGrindedFruitBowl.transform.DOMove(endPos, 2f).OnComplete(() =>
+                {
+                    grindedFruitController.grindedFruitBowlList.Remove(lastGrindedFruitBowl);
+
+                    Debug.Log("giriyo on complete'e");
+                    isHolding = true;
+
+                    if (!collectedGrindedFruitList.Contains(lastGrindedFruitBowl))
+                    {
+                        collectedGrindedFruitList.Add(lastGrindedFruitBowl);
+                    }
+                });
+
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                Debug.Log("toplanmadý");
+            }
+            yield return null;
+        }
     }
 }

@@ -445,12 +445,9 @@ MonoBehaviour:
   grinderSO: {fileID: 11400000, guid: 43c63162dee0fd8489e2c93770b3206e, type: 2}
   playerController: {fileID: 1153044414}
   grinderTimerImage: {fileID: 878982782}
-  grindedFruitBowlPrefab: {fileID: 1734196065030747087, guid: 8e0e30070b8a19e499b8b7109830b453, type: 3}
-  grindedFruitBowlSpawnPoint: {fileID: 426952748}
-  grindedFruitSpawnerContainer: {fileID: 512250885}
   grinderFruitCountText: {fileID: 1882233488}
+  grindedFruitController: {fileID: 325914531}
   grinderFruitsList: []
-  grindedFruitBowlList: []
 --- !u!1 &102922552
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +805,7 @@ GameObject:
   - component: {fileID: 325914528}
   - component: {fileID: 325914527}
   - component: {fileID: 325914526}
+  - component: {fileID: 325914531}
   m_Layer: 0
   m_Name: GrindedFruitTableSpot
   m_TagString: GrindedFruitTableSpot
@@ -923,6 +921,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &325914531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325914525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb83e0e58e57ed1428ce389be1ebf6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grindedFruitController: {fileID: 455381270}
+  grindedFruitBowlSpawnPoint: {fileID: 426952748}
+  grindedFruitSO: {fileID: 11400000, guid: 54f8526dd54a3674c997b8dddd42eb5f, type: 2}
+  grinderController: {fileID: 54064612}
+  grindedFruitBowlList: []
 --- !u!1 &387181338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,6 +1159,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 435452273}
   m_Mesh: {fileID: -3147634971949748866, guid: 84a0ca5ff5af82c4a9285430d79d3139, type: 3}
+--- !u!1 &455381270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 455381272}
+  m_Layer: 0
+  m_Name: GrindedFruitController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &455381272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455381270}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &463856440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,7 +1412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 512250886}
   m_Layer: 0
-  m_Name: GrindedFruitSpawnerContainer
+  m_Name: GrindedFruitContainer
   m_TagString: Untagged
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2172,8 +2218,13 @@ MonoBehaviour:
   fruitContainer: {fileID: 537714742}
   grinderController: {fileID: 54064612}
   lemonPatch: {fileID: 2104116698}
+  grindedFruitBowlSpawnPoint: {fileID: 426952748}
   grinder: {fileID: 1175390571}
   grinderOffSet: {x: 0, y: 1, z: 0}
+  grindedFruitContainer: {fileID: 512250885}
+  grindedFruitController: {fileID: 325914531}
+  collectedGrindedFruitList: []
+  grindedFruitSO: {fileID: 11400000, guid: 54f8526dd54a3674c997b8dddd42eb5f, type: 2}
   isHolding: 0
   collectedFruitList: []
 --- !u!54 &1153044416
@@ -3395,6 +3446,148 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3b5b4aa9186ead3488efaca7c39d18ee, type: 3}
   m_PrefabInstance: {fileID: 34446840}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1759373585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1759373591}
+  - component: {fileID: 1759373590}
+  - component: {fileID: 1759373589}
+  - component: {fileID: 1759373588}
+  - component: {fileID: 1759373587}
+  - component: {fileID: 1759373586}
+  m_Layer: 0
+  m_Name: TrashBin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1759373586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759373585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf157f33080b2b43a1cd196662dfc36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1153044414}
+  grindedFruitController: {fileID: 325914531}
+--- !u!65 &1759373587
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759373585}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &1759373588
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759373585}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1759373589
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759373585}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1759373590
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759373585}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1759373591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759373585}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12, y: 0.5, z: -18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1859266801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4056,6 +4249,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8596225767065565827, guid: 42e01e244061e7847acb5b8589a23090, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8743643426872415698, guid: 42e01e244061e7847acb5b8589a23090, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -4165,3 +4362,5 @@ SceneRoots:
   - {fileID: 1580792624}
   - {fileID: 325914530}
   - {fileID: 426952749}
+  - {fileID: 455381272}
+  - {fileID: 1759373591}

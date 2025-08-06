@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GrinderController : MonoBehaviour
 {
     [SerializeField] GrinderSO grinderSO;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Image grinderTimerImage;
-    [SerializeField] private GameObject grindedFruitBowlPrefab;
-    [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
-    [SerializeField] private GameObject grindedFruitSpawnerContainer;
     [SerializeField] private TextMesh grinderFruitCountText;
 
     private bool isGrinding;
     private Coroutine grinderCoroutine;
     private Coroutine grinderProcessCoroutine;
 
+    private PlayerInteracton playerInteracton;
+    public GrindedFruitController grindedFruitController;
     public List<GameObject> grinderFruitsList;
-    public List<GameObject> grindedFruitBowlList;
+    
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class GrinderController : MonoBehaviour
     }
     public void StartGrinder()
     {
-        if (grindedFruitBowlList.Count == grinderSO.grindedFruitBowlCapacity)
+        if (grindedFruitController.grindedFruitBowlList.Count == grinderSO.grindedFruitBowlCapacity)
         {
             ResetGrinder();
             return;
@@ -97,7 +97,7 @@ public class GrinderController : MonoBehaviour
         grinderTimerImage.gameObject.SetActive(status);
     }
 
-    private void ResetGrinder()
+    public void ResetGrinder()
     {
         grinderTimerImage.fillAmount = 1f;
 
@@ -113,44 +113,9 @@ public class GrinderController : MonoBehaviour
         return grinderFruitsList.Count < grinderSO.grinderCapacity;
     }
 
-    public bool CanCreateGrindedFruit()
-    {
-        if (grindedFruitBowlList.Count < grinderSO.grindedFruitBowlCapacity)
-        {
-            GameObject grindedFruit = Instantiate(grindedFruitBowlPrefab, grindedFruitBowlSpawnPoint.transform.position + new Vector3(0, 0, 1 * grindedFruitBowlList.Count), Quaternion.identity);
-
-            grindedFruit.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-
-            grindedFruit.transform.SetParent(grindedFruitBowlSpawnPoint.transform);
-
-            grindedFruitBowlList.Add(grindedFruit);
-
-            IsTableFull();
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public void GrinderFruitCountText()
     {
         grinderFruitCountText.text = grinderFruitsList.Count.ToString();
-    }
-
-    private bool IsTableFull()
-    {
-        if (grindedFruitBowlList.Count == grinderSO.grindedFruitBowlCapacity)
-        {
-            ResetGrinder();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     public void AddFruit(GameObject fruit)
@@ -163,16 +128,15 @@ public class GrinderController : MonoBehaviour
         }
     }
 
-    private void CollectGrindedFruitBowl()
+    public bool CanCreateGrindedFruit()
     {
-        if (grindedFruitBowlList.Count > 0)
+        if (grindedFruitController != null && grindedFruitController.CreateGrindedFruit())
         {
-            GameObject lastGrindedFruit = grindedFruitBowlList[grindedFruitBowlList.Count- 1];
-
-            lastGrindedFruit.SetActive(false);
-
-            grindedFruitBowlList.RemoveAt(grindedFruitBowlList.Count- 1);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
-    
 }
