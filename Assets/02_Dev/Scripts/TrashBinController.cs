@@ -6,6 +6,7 @@ public class TrashBinController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GrindedFruitController grindedFruitController;
+    [SerializeField] private JuiceMakerController juiceMakerController;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,13 +25,14 @@ public class TrashBinController : MonoBehaviour
 
         playerController.collectedFruitList.Clear();
 
-        /*foreach (var grindedFruit in playerController.coll)
+        foreach (var grindedFruit in playerController.collectedGrindedFruitList)
         {
             Destroy(grindedFruit);
         }
 
-        grindedFruitController.grindedFruitBowlList.Clear();
 
-        playerController.isHolding = false;*/
+        playerController.collectedGrindedFruitList.Clear();
+
+        playerController.isHolding = false;
     }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GrindedFruitSO
   m_EditorClassIdentifier: 
   grindedFruitCapacity: 3
-  grindedFruitPrefab: {fileID: 1734196065030747087, guid: 8e0e30070b8a19e499b8b7109830b453, type: 3}
+  grindedFruitPrefab: {fileID: 8187414306723771933, guid: 272a16ce2953c49439b7c7917a802cbb, type: 3}

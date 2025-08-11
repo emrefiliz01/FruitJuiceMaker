@@ -7,6 +7,7 @@ TagManager:
   - FruitPatch
   - GrinderSpot
   - GrindedFruitTableSpot
+  - JuiceMakerSpot
   layers:
   - Default
   - TransparentFX

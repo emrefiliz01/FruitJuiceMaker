@@ -8,6 +8,7 @@ public class GrindedFruitController : MonoBehaviour
     [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
     [SerializeField] private GrindedFruitSO grindedFruitSO;
     [SerializeField] private GrinderController grinderController;
+    private JuiceMakerSO juiceMakerSO;
 
     public List<GameObject> grindedFruitBowlList = new List<GameObject>();
 
@@ -16,8 +17,6 @@ public class GrindedFruitController : MonoBehaviour
         if (grindedFruitBowlList.Count < grindedFruitSO.grindedFruitCapacity)
         {
             GameObject grindedFruit = Instantiate(grindedFruitSO.grindedFruitPrefab, grindedFruitBowlSpawnPoint.transform.position + new Vector3(0, 0, 1 * grindedFruitBowlList.Count), Quaternion.identity);
-
-            grindedFruit.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 
             grindedFruit.transform.SetParent(grindedFruitBowlSpawnPoint.transform);
 
@@ -44,10 +43,5 @@ public class GrindedFruitController : MonoBehaviour
         {
             return false;
         }
-    }
-
-    public bool CanAddGrindedFruit()
-    {
-        return grindedFruitBowlList.Count < grindedFruitSO.grindedFruitCapacity;
-    }
+    } 
 }

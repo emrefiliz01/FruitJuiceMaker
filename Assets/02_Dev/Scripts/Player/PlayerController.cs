@@ -14,18 +14,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject lemonPatch;
     [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
     [SerializeField] private GameObject grinder;
+    [SerializeField] private GameObject juiceMaker;
     [SerializeField] private Vector3 grinderOffSet;
     [SerializeField] private GameObject grindedFruitContainer;
     [SerializeField] private GrindedFruitController grindedFruitController;
-    [SerializeField] private List<GameObject> collectedGrindedFruitList = new List<GameObject>();
     [SerializeField] private GrindedFruitSO grindedFruitSO;
 
+    public JuiceMakerController juiceMakerController;
     private PlayerController playerController;
     private FruitPatchController fruitPatchController;
     private FruitPatchSO fruitPatchSO;
     private GrinderSO grinderSO;
     private bool isAddFruitIntoGrinderCoroutineRunning;
+    private bool isAddGrindedFruitIntoJuiceMakerCoroutineRunning;
     private Coroutine addFruitIntoGrinderCoroutine;
+    private Coroutine addGrindedFruitIntoJuiceMakerCoroutine;
 
     private Coroutine collectFruitCoroutine;
     private Coroutine collectGrindedFruitCoroutine;
@@ -36,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public bool isHolding;
 
     public List<GameObject> collectedFruitList;
+    public List<GameObject> collectedGrindedFruitList;
+
 
     private Transform fruitSpawnPosition;
     
@@ -111,6 +116,7 @@ public class PlayerController : MonoBehaviour
         grindedFruitController = playerInteracton.GetGrindedFruitController();
         fruitPatchController = playerInteracton.GetFruitPatchController();
         grinderController = playerInteracton.GetGrinderController();
+        juiceMakerController = playerInteracton.GetJuiceMakerController();
         
         if (CanCollectFruit())
         {
@@ -132,11 +138,17 @@ public class PlayerController : MonoBehaviour
         {
             collectGrindedFruitCoroutine = StartCoroutine(CollectGrindedFruitCoroutine());
         }
+
+        if (CanJuicingGrindedFruit())
+        {
+            addGrindedFruitIntoJuiceMakerCoroutine = StartCoroutine(AddGrindedFruitIntoJuiceMakerCoroutine());
+            isHolding = false;
+        }
     }
 
     private bool CanCollectFruit()  
     {
-        if (fruitPatchController != null && fruitPatchController.IsReady() && isAddFruitIntoGrinderCoroutineRunning == false)
+        if (fruitPatchController != null && fruitPatchController.IsReady() && isAddFruitIntoGrinderCoroutineRunning == false && collectedGrindedFruitList.Count <= 0)
         {
             return true;
         }
@@ -177,6 +189,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool CanJuicingGrindedFruit()
+    {
+        if (juiceMakerController != null && collectedGrindedFruitList.Count > 0 && juiceMakerController.CanAddGrindedFruit())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void DestroyAndClearFruitList()
     {
         foreach (var fruit in collectedFruitList)
@@ -200,7 +224,7 @@ public class PlayerController : MonoBehaviour
 
         collectedFruitList.Add(fruit);
         
-        fruit.transform.DOLocalMove(localEndPos, 2f).SetEase(Ease.OutQuart).OnComplete(() =>
+        fruit.transform.DOLocalMove(localEndPos, 0.7f).SetEase(Ease.OutQuart).OnComplete(() =>
         {
             isCollected = true;
         });
@@ -230,7 +254,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (tempGrinderController.CanAddFruit())
                     {
-                        lastFruit.transform.DOMove(grinderPosition, 1f).SetEase(Ease.OutQuart).OnComplete(() =>
+                        lastFruit.transform.DOMove(grinderPosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(() =>
                         {
                             tempGrinderController.AddFruit(lastFruit);
                                       
@@ -270,11 +294,11 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject lastGrindedFruitBowl = grindedFruitController.grindedFruitBowlList[grindedFruitController.grindedFruitBowlList.Count - 1];
 
-                Vector3 endPos = grindedFruitContainer.transform.position + new Vector3(0, collectedGrindedFruitList.Count * 1f, 0);
-
                 lastGrindedFruitBowl.transform.SetParent(grindedFruitContainer.transform);
 
-                lastGrindedFruitBowl.transform.DOMove(endPos, 2f).OnComplete(() =>
+                Vector3 localEndPos = new Vector3(0, collectedGrindedFruitList.Count * 1f, 0);   
+
+                lastGrindedFruitBowl.transform.DOLocalMove(localEndPos, 0.7f).SetEase(Ease.OutQuart).OnComplete(() =>
                 {
                     grindedFruitController.grindedFruitBowlList.Remove(lastGrindedFruitBowl);
 
@@ -289,11 +313,39 @@ public class PlayerController : MonoBehaviour
 
                 yield return new WaitForSeconds(1f);
             }
-            else
-            {
-                Debug.Log("toplanmadý");
-            }
             yield return null;
+        }
+    }
+
+    public IEnumerator AddGrindedFruitIntoJuiceMakerCoroutine()
+    {
+        if (collectedGrindedFruitList.Count > 0 && !isAddGrindedFruitIntoJuiceMakerCoroutineRunning)
+        {
+            isAddGrindedFruitIntoJuiceMakerCoroutineRunning = true;
+
+            Vector3 juiceMakerPosition = juiceMaker.transform.position + new Vector3(0,3f,0);
+
+            while (collectedGrindedFruitList.Count > 0)
+            {
+                GameObject lastGrindedFruit = collectedGrindedFruitList[collectedGrindedFruitList.Count - 1];
+
+                if (juiceMakerController.CanAddGrindedFruit())
+                {
+                    lastGrindedFruit.transform.DOMove(juiceMakerPosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(() =>
+                    {
+                        juiceMakerController.AddGrindedFruit(lastGrindedFruit);
+
+                        juiceMakerController.StartJuiceMaker();
+
+                        collectedGrindedFruitList.RemoveAt(collectedGrindedFruitList.Count-1);
+
+                        Destroy(lastGrindedFruit);
+                    });
+                }
+                yield return new WaitForSeconds(1f);
+            }
+
+            isAddGrindedFruitIntoJuiceMakerCoroutineRunning = false;
         }
     }
 }

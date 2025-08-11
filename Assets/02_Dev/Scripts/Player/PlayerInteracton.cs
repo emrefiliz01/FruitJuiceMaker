@@ -9,6 +9,7 @@ public class PlayerInteracton : MonoBehaviour
     private GrinderController grinderController;
     private PlayerController playerController;
     private GrindedFruitController grindedFruitController;
+    private JuiceMakerController juiceMakerController;
 
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +34,14 @@ public class PlayerInteracton : MonoBehaviour
             grindedFruitController = other.GetComponent <GrindedFruitController>();
               //  grindedFruitController.CreateGrindedFruit();
         }
-        
+
+        if (other.tag == "JuiceMakerSpot")
+        {
+            Debug.Log("You entered thee Juice Maker spot");
+            juiceMakerController = other.GetComponent<JuiceMakerController>(); 
+            juiceMakerController.StartJuiceMaker();
+        }
+
 
     }
      
@@ -53,6 +61,11 @@ public class PlayerInteracton : MonoBehaviour
         {
             grindedFruitController = null;
         }
+
+        if (other.tag == "JuiceMakerSpot")
+        {
+            juiceMakerController = null;
+        }
     }
 
     public GrindedFruitController GetGrindedFruitController()
@@ -68,5 +81,10 @@ public class PlayerInteracton : MonoBehaviour
     public GrinderController GetGrinderController()
     {
         return grinderController;
+    }
+
+    public JuiceMakerController GetJuiceMakerController()
+    {
+        return juiceMakerController;
     }
 }
