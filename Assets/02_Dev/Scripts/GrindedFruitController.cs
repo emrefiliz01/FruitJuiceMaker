@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GrindedFruitController : MonoBehaviour
 {
-    [SerializeField] private GameObject grindedFruitController;
     [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
     [SerializeField] private GrindedFruitSO grindedFruitSO;
     [SerializeField] private GrinderController grinderController;
@@ -22,7 +21,10 @@ public class GrindedFruitController : MonoBehaviour
 
             grindedFruitBowlList.Add(grindedFruit);
 
-            IsTableFull();
+            if (IsTableFull())
+            {
+                grinderController.ResetGrinder();
+            }
 
             return true;
         }
@@ -36,7 +38,6 @@ public class GrindedFruitController : MonoBehaviour
     {
         if (grindedFruitBowlList.Count == grindedFruitSO.grindedFruitCapacity)
         {
-            grinderController.ResetGrinder();
             return true;
         }
         else

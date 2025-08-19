@@ -5,52 +5,65 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Player Settings
     [SerializeField] private float moveSpeed;
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
-    [SerializeField] private GameObject fruitContainer;
-    [SerializeField] private GrinderController grinderController;
-    [SerializeField] private GameObject lemonPatch;
-    [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
-    [SerializeField] private GameObject grinder;
-    [SerializeField] private GameObject juiceMaker;
-    [SerializeField] private GameObject sellingTable;
-    [SerializeField] private Vector3 grinderOffSet;
-    [SerializeField] private GameObject grindedFruitContainer;
-    [SerializeField] private GameObject juiceContainer;
-    [SerializeField] private GrindedFruitController grindedFruitController;
-    [SerializeField] private GrindedFruitSO grindedFruitSO;
-    [SerializeField] private JuiceSO juiceSO;
-
-    private SellingTableController sellingTableController;
-    public JuiceMakerController juiceMakerSpotController;
-    public JuiceMakerController collectJuiceSpotController;
-    private JuiceMakerController juiceMakerController;
-    private PlayerController playerController;
-    private FruitPatchController fruitPatchController;
-    private FruitPatchSO fruitPatchSO;
-    private GrinderSO grinderSO;
-    private bool isAddFruitIntoGrinderCoroutineRunning;
-    private bool isAddGrindedFruitIntoJuiceMakerCoroutineRunning;
-    private Coroutine addFruitIntoGrinderCoroutine;
-    private Coroutine addGrindedFruitIntoJuiceMakerCoroutine;
-
-    private Coroutine collectFruitCoroutine;
-    private Coroutine collectGrindedFruitCoroutine;
-    private Coroutine collectJuiceCoroutine;
-
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
     public bool isHolding;
+    private PlayerController playerController;
+    #endregion
 
+    #region Patch Settings
+    [SerializeField] private GameObject lemonPatch;
+    [SerializeField] private GameObject fruitContainer;
+    private FruitPatchSO fruitPatchSO;
+    private FruitPatchController fruitPatchController;
     public List<GameObject> collectedFruitList;
-    public List<GameObject> collectedGrindedFruitList;
-    public List<GameObject> collectedJuiceList;
-
+    private Coroutine collectFruitCoroutine;
     private Transform fruitSpawnPosition;
-    
+    #endregion
+
+    #region Grinder Settings
+    [SerializeField] private GrinderController grinderController;
+    [SerializeField] private GameObject grinder;
+    [SerializeField] private Vector3 grinderOffSet;
+    private GrinderSO grinderSO;
+    private Coroutine addFruitIntoGrinderCoroutine;
+    private bool isAddFruitIntoGrinderCoroutineRunning;
+    #endregion
+
+    #region GrindedFruit Settings
+    [SerializeField] private GameObject grindedFruitBowlSpawnPoint;
+    [SerializeField] private GameObject grindedFruitContainer;
+    [SerializeField] private GrindedFruitController grindedFruitController;
+    [SerializeField] private GrindedFruitSO grindedFruitSO;
+    public List<GameObject> collectedGrindedFruitList;
+    private Coroutine collectGrindedFruitCoroutine;
+    #endregion
+
+    #region Juice Maker Settings
+    [SerializeField] private GameObject juiceMaker;
+    [SerializeField] private GameObject juiceContainer;
+    [SerializeField] private JuiceSO juiceSO;
+    public JuiceMakerController juiceMakerSpotController;
+    private JuiceMakerController juiceMakerController;
+    public JuiceMakerController collectJuiceSpotController;
+    private Coroutine addGrindedFruitIntoJuiceMakerCoroutine;
+    private bool isAddGrindedFruitIntoJuiceMakerCoroutineRunning;
+    public List<GameObject> collectedJuiceList;
+    private Coroutine collectJuiceCoroutine;
+    #endregion
+
+    #region Selling Table Settings
+    [SerializeField] private GameObject sellingTable;
+    private SellingTableController sellingTableController;
+    #endregion
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -173,24 +186,10 @@ public class PlayerController : MonoBehaviour
         if (isCollectingJuice && CanCollectJuice())
         {
             collectJuiceCoroutine = StartCoroutine(CollectJuiceCoroutine());
-        }
-
-        
+        }    
     }
 
-    private bool CanCollectFruit()  
-    {
-        if (fruitPatchController != null && fruitPatchController.IsReady() && isAddFruitIntoGrinderCoroutineRunning == false && collectedGrindedFruitList.Count <= 0 && collectedJuiceList.Count <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-
+    #region Fruit Patch
     private bool CanSpawnFruit()
     {
         fruitPatchSO = fruitPatchController.GetFruitPatchSO();
@@ -209,9 +208,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool CanGrindFruit()
+    private bool CanCollectFruit()
     {
-        if (grinderController != null && collectedFruitList.Count > 0 && grinderController.CanAddFruit())
+        if (fruitPatchController != null && fruitPatchController.IsReady() && isAddFruitIntoGrinderCoroutineRunning == false && collectedGrindedFruitList.Count <= 0 && collectedJuiceList.Count <= 0)
         {
             return true;
         }
@@ -219,28 +218,6 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-    }
-
-    private bool CanJuicingGrindedFruit()
-    {
-        if (juiceMakerController != null && collectedGrindedFruitList.Count > 0 && juiceMakerController.CanAddGrindedFruit())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private void DestroyAndClearFruitList()
-    {
-        foreach (var fruit in collectedFruitList)
-        {
-            Destroy(fruit);
-        }
-
-        collectedFruitList.Clear();
     }
 
     private IEnumerator CollectFruitCoroutine()
@@ -265,6 +242,21 @@ public class PlayerController : MonoBehaviour
         {
             localEndPos = fruitContainer.transform.position + new Vector3(0, collectedFruitList.Count * 1, 0);
             yield return null;
+        }
+    }
+
+    #endregion
+
+    #region Grinder
+    private bool CanGrindFruit()
+    {
+        if (grinderController != null && collectedFruitList.Count > 0 && grinderController.CanAddFruit())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -306,9 +298,58 @@ public class PlayerController : MonoBehaviour
         }     
     }
 
+    #endregion
+
+    #region Grinded Fruits
     public bool CanCollectGrindedFruit()
     {
         if (grindedFruitController != null && grindedFruitController.grindedFruitBowlList.Count > 0 && collectedFruitList.Count <= 0 && collectedJuiceList.Count <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public IEnumerator CollectGrindedFruitCoroutine()
+    {
+        while (collectedGrindedFruitList.Count < grindedFruitSO.grindedFruitCapacity)
+        {
+            if (CanCollectGrindedFruit())
+            {
+                GameObject lastGrindedFruitBowl = grindedFruitController.grindedFruitBowlList[grindedFruitController.grindedFruitBowlList.Count - 1];
+
+                lastGrindedFruitBowl.transform.SetParent(grindedFruitContainer.transform);
+
+                Vector3 localEndPos = new Vector3(0, collectedGrindedFruitList.Count * 1f, 0);
+
+                lastGrindedFruitBowl.transform.DOLocalMove(localEndPos, 0.7f).SetEase(Ease.OutQuart).OnComplete(() =>
+                {
+                    grindedFruitController.grindedFruitBowlList.Remove(lastGrindedFruitBowl);
+
+                    Debug.Log("entered the OnComplete");
+                    isHolding = true;
+
+                    if (!collectedGrindedFruitList.Contains(lastGrindedFruitBowl))
+                    {
+                        collectedGrindedFruitList.Add(lastGrindedFruitBowl);
+                    }
+                });
+
+                yield return new WaitForSeconds(1f);
+            }
+            yield return null;
+        }
+    }
+
+    #endregion
+
+    #region Juice Maker
+    private bool CanJuicingGrindedFruit()
+    {
+        if (juiceMakerController != null && collectedGrindedFruitList.Count > 0 && juiceMakerController.CanAddGrindedFruit())
         {
             return true;
         }
@@ -330,36 +371,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public IEnumerator CollectGrindedFruitCoroutine()
-    {
-        while (collectedGrindedFruitList.Count < grindedFruitSO.grindedFruitCapacity)
-        {
-            if (CanCollectGrindedFruit())
-            {
-                GameObject lastGrindedFruitBowl = grindedFruitController.grindedFruitBowlList[grindedFruitController.grindedFruitBowlList.Count - 1];
 
-                lastGrindedFruitBowl.transform.SetParent(grindedFruitContainer.transform);
-
-                Vector3 localEndPos = new Vector3(0, collectedGrindedFruitList.Count * 1f, 0);   
-
-                lastGrindedFruitBowl.transform.DOLocalMove(localEndPos, 0.7f).SetEase(Ease.OutQuart).OnComplete(() =>
-                {
-                    grindedFruitController.grindedFruitBowlList.Remove(lastGrindedFruitBowl);
-
-                    Debug.Log("giriyo on complete'e");
-                    isHolding = true;
-
-                    if (!collectedGrindedFruitList.Contains(lastGrindedFruitBowl))
-                    {
-                        collectedGrindedFruitList.Add(lastGrindedFruitBowl);
-                    }
-                });
-
-                yield return new WaitForSeconds(1f);
-            }
-            yield return null;
-        }
-    }
 
     public IEnumerator CollectJuiceCoroutine()
     {
@@ -375,7 +387,7 @@ public class PlayerController : MonoBehaviour
 
                 lastJuice.transform.DOLocalMove(localEndPos, 1f).SetEase(Ease.OutQuart).OnComplete(() =>
                 {
-                    Debug.Log("GÝRÝÝYORR on complete'e");
+                    Debug.Log("entered the OnComplete");
                     juiceMakerController.juiceList.Remove(lastJuice);
 
                     if (!collectedJuiceList.Contains(lastJuice))
@@ -385,7 +397,7 @@ public class PlayerController : MonoBehaviour
                     isHolding = true;
                 });
 
-                Debug.Log("OnComplete'ee GÝRMÝYORRR");
+                Debug.Log("didn't entered the OnComplete");
 
                 yield return new WaitForSeconds(1f);
             }
@@ -425,24 +437,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   /* public IEnumerator AddJuiceOnTheSellingTable()
-    {
-        if (collectedJuiceList.Count > 0)
-        {
-            Vector3 sellingTablePosition = sellingTable.transform.position;
+    #endregion
 
-            while (collectedJuiceList.Count > 0)
-            {
-                GameObject lastJuice = collectedJuiceList[collectedJuiceList.Count-1];
+    /* public IEnumerator AddJuiceOnTheSellingTable()
+     {
+         if (collectedJuiceList.Count > 0)
+         {
+             Vector3 sellingTablePosition = sellingTable.transform.position;
 
-                if (sellingTableController.CanPutJuiceOnSellingTable())
-                {
-                    lastJuice.transform.DOMove(sellingTablePosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(() =>
-                    {
-                        
-                    });
-                }
-            }
-        }
-    } */
+             while (collectedJuiceList.Count > 0)
+             {
+                 GameObject lastJuice = collectedJuiceList[collectedJuiceList.Count-1];
+
+                 if (sellingTableController.CanPutJuiceOnSellingTable())
+                 {
+                     lastJuice.transform.DOMove(sellingTablePosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(() =>
+                     {
+
+                     });
+                 }
+             }
+         }
+     } */
 }

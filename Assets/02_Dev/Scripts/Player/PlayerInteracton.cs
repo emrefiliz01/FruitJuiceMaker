@@ -21,33 +21,30 @@ public class PlayerInteracton : MonoBehaviour
         {
             Debug.Log("You entered the fruit patch");
             fruitPatchController = other.GetComponent<FruitPatchController>();
-            //   fruitPatchController.CollectFruit();
         }
 
         if (other.tag == "GrinderSpot")
         {
             Debug.Log("You entered thee grinder spot");
             grinderController = other.GetComponent<GrinderController>();
-            // grinderController.StartGrinder();
         }
 
         if (other.tag == "GrindedFruitTableSpot")
         {
             Debug.Log("You entered thee grinded fruit table spot");
             grindedFruitController = other.GetComponent <GrindedFruitController>();
-              //  grindedFruitController.CreateGrindedFruit();
         }
 
-        if (other.tag == "JuiceMakerSpot")
+        if (other.tag == "JuiceMakerInput")
         {
-            Debug.Log("You entered thee Juice Maker spot");
+            Debug.Log("You entered thee Juice Maker Input");
             juiceMakerController = other.GetComponent<JuiceMakerController>();
             isCollectingJuice = false;
         }
 
-        if (other.tag == "CollectJuiceSpot")
+        if (other.tag == "JuiceMakerOutput")
         {
-            Debug.Log("You entered thee Juice Collect spot");
+            Debug.Log("You entered thee Juice Maker Output");
             juiceMakerController = other.GetComponent<JuiceMakerController>();
             isCollectingJuice = true;
         }
@@ -83,14 +80,14 @@ public class PlayerInteracton : MonoBehaviour
         }
     }
 
-    public GrindedFruitController GetGrindedFruitController()
-    {
-        return grindedFruitController;
-    }
-
     public FruitPatchController GetFruitPatchController()
     {
         return fruitPatchController;
+    }
+
+    public GrindedFruitController GetGrindedFruitController()
+    {
+        return grindedFruitController;
     }
 
     public GrinderController GetGrinderController()
