@@ -3411,7 +3411,7 @@ Transform:
   m_GameObject: {fileID: 1500689676}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.08, y: 1.106, z: 14.86}
+  m_LocalPosition: {x: -3.08, y: 1, z: 14.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4260,7 +4260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 1153044414}
   grindedFruitController: {fileID: 325914531}
-  juiceMakerController: {fileID: 0}
+  juiceMakerController: {fileID: 2024073882}
 --- !u!65 &1759373587
 BoxCollider:
   m_ObjectHideFlags: 0

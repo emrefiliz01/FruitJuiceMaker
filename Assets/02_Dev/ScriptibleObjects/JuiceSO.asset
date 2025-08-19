@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: JuiceSO
   m_EditorClassIdentifier: 
   juiceCapacity: 5
-  juicePrefab: {fileID: 1227095496187476392, guid: 1c7e4921bf63d7d46bcdf3074a61620f, type: 3}
+  juicePrefab: {fileID: 4031109857135441739, guid: c9a8fa74dc6b68b43b034a664615ab92, type: 3}
