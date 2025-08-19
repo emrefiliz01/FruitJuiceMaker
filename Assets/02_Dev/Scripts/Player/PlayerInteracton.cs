@@ -12,6 +12,9 @@ public class PlayerInteracton : MonoBehaviour
     private JuiceMakerController juiceMakerController;
 
 
+    private bool isCollectingJuice;
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "FruitPatch")
@@ -38,11 +41,16 @@ public class PlayerInteracton : MonoBehaviour
         if (other.tag == "JuiceMakerSpot")
         {
             Debug.Log("You entered thee Juice Maker spot");
-            juiceMakerController = other.GetComponent<JuiceMakerController>(); 
-            juiceMakerController.StartJuiceMaker();
+            juiceMakerController = other.GetComponent<JuiceMakerController>();
+            isCollectingJuice = false;
         }
 
-
+        if (other.tag == "CollectJuiceSpot")
+        {
+            Debug.Log("You entered thee Juice Collect spot");
+            juiceMakerController = other.GetComponent<JuiceMakerController>();
+            isCollectingJuice = true;
+        }
     }
      
     public void OnTriggerExit(Collider other)
@@ -65,6 +73,13 @@ public class PlayerInteracton : MonoBehaviour
         if (other.tag == "JuiceMakerSpot")
         {
             juiceMakerController = null;
+            isCollectingJuice = false;
+        }
+
+        if (other.tag == "CollectJuiceSpot")
+        {
+            juiceMakerController = null;
+            isCollectingJuice = false;
         }
     }
 
@@ -86,5 +101,10 @@ public class PlayerInteracton : MonoBehaviour
     public JuiceMakerController GetJuiceMakerController()
     {
         return juiceMakerController;
+    }
+
+    public bool IsCollectingJuice()
+    {
+        return isCollectingJuice;
     }
 }

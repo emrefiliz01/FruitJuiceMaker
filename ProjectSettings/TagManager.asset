@@ -8,6 +8,7 @@ TagManager:
   - GrinderSpot
   - GrindedFruitTableSpot
   - JuiceMakerSpot
+  - CollectJuiceSpot
   layers:
   - Default
   - TransparentFX

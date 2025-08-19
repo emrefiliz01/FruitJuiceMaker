@@ -30,8 +30,15 @@ public class TrashBinController : MonoBehaviour
             Destroy(grindedFruit);
         }
 
-
         playerController.collectedGrindedFruitList.Clear();
+
+        foreach (var juice in playerController.collectedJuiceList)
+        {
+            Destroy(juice);
+        }
+
+        playerController.collectedJuiceList.Clear();
+
 
         playerController.isHolding = false;
     }
