@@ -1,44 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class TrashBinController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GrindedFruitController grindedFruitController;
     [SerializeField] private JuiceMakerController juiceMakerController;
+    [SerializeField] private Transform trashBinThrowPoint;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            ClearAndDestroyLists();
+            ThrowAllItems();
         }
     }
-
-    private void ClearAndDestroyLists()
+    private void ThrowAllItems()
     {
-        foreach (var fruit in playerController.collectedFruitList)
+        #region Fruits
+        foreach (GameObject fruit in playerController.collectedFruitList)
         {
-            Destroy(fruit);
+            if (fruit != null)
+            {
+                fruit.transform.DOMove(trashBinThrowPoint.position, 0.7f).OnComplete(() => Destroy(fruit));
+            }
         }
 
         playerController.collectedFruitList.Clear();
+        #endregion
 
-        foreach (var grindedFruit in playerController.collectedGrindedFruitList)
+        #region Grinded Fruits
+        foreach (GameObject grindedFruit in playerController.collectedGrindedFruitList)
         {
-            Destroy(grindedFruit);
+            if (grindedFruit != null)
+            {
+                grindedFruit.transform.DOMove(trashBinThrowPoint.position, 0.7f).OnComplete(() => Destroy(grindedFruit));
+            }
         }
 
         playerController.collectedGrindedFruitList.Clear();
+        #endregion
 
-        foreach (var juice in playerController.collectedJuiceList)
+        #region Juice
+        foreach (GameObject juice in playerController.collectedJuiceList)
         {
-            Destroy(juice);
+            if (juice != null)
+            {
+                juice.transform.DOMove(trashBinThrowPoint.position, 0.7f).OnComplete(() => Destroy(juice));
+            }
         }
 
         playerController.collectedJuiceList.Clear();
-
+        #endregion
 
         playerController.isHolding = false;
     }
