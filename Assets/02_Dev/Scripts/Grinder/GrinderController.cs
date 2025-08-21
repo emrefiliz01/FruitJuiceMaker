@@ -15,6 +15,7 @@ public class GrinderController : MonoBehaviour
     private Coroutine grinderCoroutine;
     private Coroutine grinderProcessCoroutine;
 
+    private GrindedFruitSO grindedFruitSO;
     private PlayerInteracton playerInteracton;
     public GrindedFruitController grindedFruitController;
     public List<GameObject> grinderFruitsList;
@@ -72,11 +73,19 @@ public class GrinderController : MonoBehaviour
             {
                 grinderFruitsList.RemoveAt(0);
 
-                CanCreateGrindedFruit();
+                if (CanCreateGrindedFruit())
+                {
+                    grindedFruitController.CreateGrindedFruit();
+
+                    if (grindedFruitController.IsTableFull())
+                    {
+                        ResetGrinder();
+                    }
+
+                    grindedFruitController.CheckAndStartGrinder();
+                }
 
                 currentGrinderTimer = grinderSO.grindingTime;
-
-                
             }
         }
         ResetGrinder();
@@ -130,13 +139,11 @@ public class GrinderController : MonoBehaviour
 
     public bool CanCreateGrindedFruit()
     {
-        if (grindedFruitController != null && grindedFruitController.CreateGrindedFruit())
-        {
-            return true;
-        }
-        else
+        if (grindedFruitController == null && grindedFruitController.grindedFruitBowlList.Count >= grindedFruitSO.grindedFruitCapacity)
         {
             return false;
         }
+
+        return true;
     }
 }

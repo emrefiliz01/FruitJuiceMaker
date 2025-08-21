@@ -11,32 +11,16 @@ public class GrindedFruitController : MonoBehaviour
 
     public List<GameObject> grindedFruitBowlList = new List<GameObject>();
 
-    public bool CreateGrindedFruit()
+    public void CreateGrindedFruit()
     {
-        if (grindedFruitBowlList.Count < grindedFruitSO.grindedFruitCapacity)
-        {
-            GameObject grindedFruit = Instantiate(grindedFruitSO.grindedFruitPrefab, grindedFruitBowlSpawnPoint.transform.position + new Vector3(0, 0, 1 * grindedFruitBowlList.Count), Quaternion.identity);
+        GameObject grindedFruit = Instantiate(grindedFruitSO.grindedFruitPrefab, grindedFruitBowlSpawnPoint.transform.position + new Vector3(0, 0, 1 * grindedFruitBowlList.Count), Quaternion.identity);
 
-            grindedFruit.transform.SetParent(grindedFruitBowlSpawnPoint.transform);
+        grindedFruit.transform.SetParent(grindedFruitBowlSpawnPoint.transform);
 
-            grindedFruitBowlList.Add(grindedFruit);
-
-            if (IsTableFull())
-            {
-                grinderController.ResetGrinder();
-            }
-
-            CheckAndStartGrinder();
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        grindedFruitBowlList.Add(grindedFruit);
     }
 
-    private bool IsTableFull()
+    public bool IsTableFull()
     {
         if (grindedFruitBowlList.Count == grindedFruitSO.grindedFruitCapacity)
         {
@@ -50,9 +34,29 @@ public class GrindedFruitController : MonoBehaviour
 
     public void CheckAndStartGrinder()
     {
-        if (grinderController != null && grinderController.CanAddFruit() && grinderController.grinderFruitsList.Count > 0)
+        if (CanStartGrinder() == true)
         {
             grinderController.StartGrinder();
         }
+    }
+
+    public bool CanStartGrinder()
+    {
+        if (grinderController == null)
+        {
+            return false;
+        }
+
+        if (!grinderController.CanAddFruit())
+        {
+            return false;
+        }
+
+        if (grinderController.grinderFruitsList.Count <= 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
