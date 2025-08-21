@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
         juiceMakerController = playerInteracton.GetJuiceMakerController();
 
 
-        //juiceMakerController = juiceMakerSpotController; // DENEMELÝKK!!! (Juice'u topladýktan sonra juice list'e alýyor mu diye bakmak için)
+        //juiceMakerController = juiceMakerSpotController; // for test
 
 
         bool isCollectingJuice = playerInteracton.IsCollectingJuice();
@@ -343,6 +343,8 @@ public class PlayerController : MonoBehaviour
                     isHolding = true;
 
                     isCollectingGrindedFruit = false;
+
+                    grindedFruitController.CheckAndStartGrinder();
                 });
 
                 //while (!isCollected)
@@ -358,6 +360,8 @@ public class PlayerController : MonoBehaviour
                  yield return null;
              }*/
             yield return null;
+
+            
         }
     }
 

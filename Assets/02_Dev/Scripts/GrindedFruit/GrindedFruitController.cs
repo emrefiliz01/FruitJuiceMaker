@@ -26,6 +26,8 @@ public class GrindedFruitController : MonoBehaviour
                 grinderController.ResetGrinder();
             }
 
+            CheckAndStartGrinder();
+
             return true;
         }
         else
@@ -45,4 +47,12 @@ public class GrindedFruitController : MonoBehaviour
             return false;
         }
     } 
+
+    public void CheckAndStartGrinder()
+    {
+        if (grinderController != null && grinderController.CanAddFruit() && grinderController.grinderFruitsList.Count > 0)
+        {
+            grinderController.StartGrinder();
+        }
+    }
 }
