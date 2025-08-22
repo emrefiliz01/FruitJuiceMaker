@@ -332,7 +332,10 @@ public class PlayerController : MonoBehaviour
                 if (!collectedGrindedFruitList.Contains(lastGrindedFruitBowl))
                 {
                     collectedGrindedFruitList.Add(lastGrindedFruitBowl);
+
                 }
+
+                grindedFruitController.CheckAndStartGrinder();
 
                 Vector3 localEndPos = new Vector3(0, collectedGrindedFruitList.Count * 1f, 0);
 
@@ -344,7 +347,7 @@ public class PlayerController : MonoBehaviour
 
                     isCollectingGrindedFruit = false;
 
-                    grindedFruitController.CheckAndStartGrinder();
+                    
                 });
 
                 //while (!isCollected)
