@@ -9,6 +9,7 @@ TagManager:
   - GrindedFruitTableSpot
   - JuiceMakerOutput
   - JuiceMakerInput
+  - SellingTableSpot
   layers:
   - Default
   - TransparentFX

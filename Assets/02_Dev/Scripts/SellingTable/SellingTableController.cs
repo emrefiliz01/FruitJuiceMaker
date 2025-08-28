@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class SellingTableController : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private List<Transform> sellingSlots;
+    public List<Transform> sellingSlots;
+    public List<GameObject> juiceOnTable;
 
-    public List<GameObject> placedJuiceList = new List<GameObject>();
-
-    private Dictionary<Transform, bool> slotStatus = new Dictionary<Transform, bool>();
-
-    private void Start()
+    public bool CanPlaceJuice()
     {
-        foreach (var slot in sellingSlots)
+        for (int i = 0; i < juiceOnTable.Count; i++)
         {
-            slotStatus.Add(slot, false);
+            if (juiceOnTable[i] == null)
+            {
+                return true;
+            }
         }
+        Debug.Log("NOT NULL");
+        return false;
     }
-    public bool CanPutJuiceOnSellingTable()
+
+    public int EmptySlot()
     {
-        return slotStatus.ContainsValue(false);
+        for (int i = 0; i < sellingSlots.Count; i++)
+        {
+            if (juiceOnTable[i] == null)
+            {
+                return i;
+            }
+        } 
+        return 0;
     }
 }

@@ -10,6 +10,7 @@ public class PlayerInteracton : MonoBehaviour
     private PlayerController playerController;
     private GrindedFruitController grindedFruitController;
     private JuiceMakerController juiceMakerController;
+    private SellingTableController sellingTableController;
 
 
     private bool isCollectingJuice;
@@ -32,21 +33,27 @@ public class PlayerInteracton : MonoBehaviour
         if (other.tag == "GrindedFruitTableSpot")
         {
             Debug.Log("You entered thee grinded fruit table spot");
-            grindedFruitController = other.GetComponent <GrindedFruitController>();
+            grindedFruitController = other.GetComponent<GrindedFruitController>();
         }
 
         if (other.tag == "JuiceMakerInput")
         {
             Debug.Log("You entered thee Juice Maker Input");
-            juiceMakerController = other.GetComponent<JuiceMakerController>();
+            juiceMakerController = other.GetComponentInParent<JuiceMakerController>();
             isCollectingJuice = false;
         }
 
         if (other.tag == "JuiceMakerOutput")
         {
             Debug.Log("You entered thee Juice Maker Output");
-            juiceMakerController = other.GetComponent<JuiceMakerController>();
+            juiceMakerController = other.GetComponentInParent<JuiceMakerController>();
             isCollectingJuice = true;
+        }
+
+        if (other.tag == "SellingTableSpot")
+        {
+            Debug.Log("You entered thee Selling Table Spot");
+            sellingTableController = other.GetComponent<SellingTableController>();
         }
     }
      
@@ -67,16 +74,21 @@ public class PlayerInteracton : MonoBehaviour
             grindedFruitController = null;
         }
 
-        if (other.tag == "JuiceMakerSpot")
+        if (other.tag == "JuiceMakerInput")
         {
             juiceMakerController = null;
             isCollectingJuice = false;
         }
 
-        if (other.tag == "CollectJuiceSpot")
+        if (other.tag == "JuiceMakerOutput")
         {
             juiceMakerController = null;
             isCollectingJuice = false;
+        }
+
+        if (other.tag == "SellingTableSpot")
+        {
+            sellingTableController = null;
         }
     }
 
@@ -103,5 +115,10 @@ public class PlayerInteracton : MonoBehaviour
     public bool IsCollectingJuice()
     {
         return isCollectingJuice;
+    }
+
+    public SellingTableController GetSellingTableController()
+    {
+        return sellingTableController;
     }
 }

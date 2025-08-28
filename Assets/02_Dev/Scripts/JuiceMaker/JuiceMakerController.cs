@@ -90,7 +90,11 @@ public class JuiceMakerController : MonoBehaviour
 
         JuiceMakerCountText();
 
-        StopCoroutine(juiceMakerCoroutine);
+        if (juiceMakerCoroutine != null)
+        {
+            StopCoroutine(juiceMakerCoroutine);
+        }
+        
     }
 
     public void JuiceMakerCountText()
@@ -112,7 +116,7 @@ public class JuiceMakerController : MonoBehaviour
         return playerController.collectedGrindedFruitList.Count < JuiceSO.juiceCapacity;
     }
 
-    private bool IsJuiceTableFull()
+    /*private bool IsJuiceTableFull()
     {
         if (juiceMakerList.Count == JuiceSO.juiceCapacity)
         {
@@ -123,7 +127,7 @@ public class JuiceMakerController : MonoBehaviour
         {
             return false;
         }
-    }
+    }*/
 
     public bool CreateJuice()
     {
@@ -135,7 +139,7 @@ public class JuiceMakerController : MonoBehaviour
 
             juiceList.Add(juice);
 
-            IsJuiceTableFull();
+            //IsJuiceTableFull();
 
             return true;
         }
@@ -144,4 +148,16 @@ public class JuiceMakerController : MonoBehaviour
             return false;
         }
     }
+
+    /*public bool IsInputSpot()
+    {
+        return isInputSpot;
+    }
+
+    public bool IsOutputSpot()
+    {
+        return isOutputSpot;
+    }*/
+
+
 }

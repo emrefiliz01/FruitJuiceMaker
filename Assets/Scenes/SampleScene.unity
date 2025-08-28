@@ -1737,6 +1737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 553767883}
+  - component: {fileID: 553767884}
   m_Layer: 0
   m_Name: JuiceMakerController
   m_TagString: Untagged
@@ -1759,6 +1760,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 746127757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &553767884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553767881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e29a1fdaabd974fb037931f95f8634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  juiceMakerTimerImage: {fileID: 140823675}
+  juiceMakerCountText: {fileID: 334542333}
+  juiceMakerSO: {fileID: 11400000, guid: af519b60a46dddf4886c7ef2fa04c286, type: 2}
+  JuiceSO: {fileID: 11400000, guid: 341da4f219764b14ba58bd67f8742bed, type: 2}
+  juiceSpawnPoint: {fileID: 1500689676}
+  playerController: {fileID: 1153044414}
+  grindedFruitController: {fileID: 325914531}
+  juiceMakerList: []
+  juiceList: []
 --- !u!1 &675190970
 GameObject:
   m_ObjectHideFlags: 0
@@ -2792,9 +2814,8 @@ MonoBehaviour:
   juiceMaker: {fileID: 463856440}
   juiceContainer: {fileID: 1582533041}
   juiceSO: {fileID: 11400000, guid: 341da4f219764b14ba58bd67f8742bed, type: 2}
-  juiceMakerSpotController: {fileID: 2024073882}
-  collectJuiceSpotController: {fileID: 1893550411}
   collectedJuiceList: []
+  juiceMakerController: {fileID: 553767884}
   sellingTable: {fileID: 1580792620}
 --- !u!54 &1153044416
 Rigidbody:
@@ -3656,9 +3677,10 @@ GameObject:
   - component: {fileID: 1580792622}
   - component: {fileID: 1580792621}
   - component: {fileID: 1580792625}
+  - component: {fileID: 1580792626}
   m_Layer: 0
   m_Name: SellingSpot
-  m_TagString: Untagged
+  m_TagString: SellingTableSpot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3762,19 +3784,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e8be73f23042742b0cff94d6a9cdae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 1153044414}
   sellingSlots:
   - {fileID: 1113236903}
   - {fileID: 1482171537}
   - {fileID: 1699270520}
   - {fileID: 914859010}
   - {fileID: 1968040624}
-  placedJuiceList:
-  - {fileID: 1113236902}
-  - {fileID: 1482171536}
-  - {fileID: 1699270519}
-  - {fileID: 914859009}
-  - {fileID: 1968040623}
+  juiceOnTable:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!65 &1580792626
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580792620}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 0, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1582533041
 GameObject:
   m_ObjectHideFlags: 0
@@ -4337,8 +4379,8 @@ Transform:
   m_GameObject: {fileID: 1732225301}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.489, y: 0.5, z: 14.95}
-  m_LocalScale: {x: 4, y: 1, z: 1}
+  m_LocalPosition: {x: -5, y: 0.5, z: 14.95}
+  m_LocalScale: {x: 5.05, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 746127757}
@@ -4491,7 +4533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 1153044414}
   grindedFruitController: {fileID: 325914531}
-  juiceMakerController: {fileID: 2024073882}
+  juiceMakerController: {fileID: 0}
   trashBinThrowPoint: {fileID: 675190971}
 --- !u!65 &1759373587
 BoxCollider:
@@ -4814,9 +4856,8 @@ GameObject:
   - component: {fileID: 1893550408}
   - component: {fileID: 1893550407}
   - component: {fileID: 1893550405}
-  - component: {fileID: 1893550411}
   m_Layer: 0
-  m_Name: JuiceCollectOutput
+  m_Name: JuiceMakerOutput
   m_TagString: JuiceMakerOutput
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4930,27 +4971,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 746127757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1893550411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893550404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50e29a1fdaabd974fb037931f95f8634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  juiceMakerTimerImage: {fileID: 140823675}
-  juiceMakerCountText: {fileID: 334542333}
-  juiceMakerSO: {fileID: 11400000, guid: af519b60a46dddf4886c7ef2fa04c286, type: 2}
-  JuiceSO: {fileID: 11400000, guid: 341da4f219764b14ba58bd67f8742bed, type: 2}
-  juiceSpawnPoint: {fileID: 1500689676}
-  playerController: {fileID: 1153044414}
-  grindedFruitController: {fileID: 325914531}
-  juiceMakerList: []
-  juiceList: []
 --- !u!1 &1968040623
 GameObject:
   m_ObjectHideFlags: 0
@@ -5233,7 +5253,6 @@ GameObject:
   - component: {fileID: 2024073877}
   - component: {fileID: 2024073876}
   - component: {fileID: 2024073881}
-  - component: {fileID: 2024073882}
   m_Layer: 0
   m_Name: JuiceMakerInput
   m_TagString: JuiceMakerInput
@@ -5349,27 +5368,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 0, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2024073882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024073875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50e29a1fdaabd974fb037931f95f8634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  juiceMakerTimerImage: {fileID: 140823675}
-  juiceMakerCountText: {fileID: 334542333}
-  juiceMakerSO: {fileID: 11400000, guid: af519b60a46dddf4886c7ef2fa04c286, type: 2}
-  JuiceSO: {fileID: 11400000, guid: 341da4f219764b14ba58bd67f8742bed, type: 2}
-  juiceSpawnPoint: {fileID: 1500689676}
-  playerController: {fileID: 1153044414}
-  grindedFruitController: {fileID: 325914531}
-  juiceMakerList: []
-  juiceList: []
 --- !u!1 &2104116698
 GameObject:
   m_ObjectHideFlags: 0

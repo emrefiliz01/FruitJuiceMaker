@@ -10,19 +10,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private GameObject playerModel;
     [SerializeField] private PlayerInteracton playerInteracton;
+    private PlayerController playerController;
     private Animator animator;
     private Rigidbody rb;
     private bool isRunning;
     public bool isHolding;
-    private PlayerController playerController;
     #endregion
 
     #region Patch Settings
     [SerializeField] private GameObject lemonPatch;
     [SerializeField] private GameObject fruitContainer;
+    public List<GameObject> collectedFruitList;
     private FruitPatchSO fruitPatchSO;
     private FruitPatchController fruitPatchController;
-    public List<GameObject> collectedFruitList;
     private Coroutine collectFruitCoroutine;
     private Transform fruitSpawnPosition;
     #endregion
@@ -50,20 +50,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject juiceMaker;
     [SerializeField] private GameObject juiceContainer;
     [SerializeField] private JuiceSO juiceSO;
-    public JuiceMakerController juiceMakerSpotController;
-    private JuiceMakerController juiceMakerController;
-    public JuiceMakerController collectJuiceSpotController;
-    private Coroutine addGrindedFruitIntoJuiceMakerCoroutine;
-    private bool isAddGrindedFruitIntoJuiceMakerCoroutineRunning;
     public List<GameObject> collectedJuiceList;
+    //public JuiceMakerController juiceMakerSpotController;
+    public JuiceMakerController juiceMakerController;
+    //public JuiceMakerController collectJuiceSpotController;
+    private Coroutine addGrindedFruitIntoJuiceMakerCoroutine;
     private Coroutine collectJuiceCoroutine;
+    private bool isAddGrindedFruitIntoJuiceMakerCoroutineRunning;
     #endregion
 
     #region Selling Table Settings
     [SerializeField] private GameObject sellingTable;
     private SellingTableController sellingTableController;
+    private Coroutine placeJuiceOnSellingTableCoroutine;
     #endregion
-
 
     private void Awake()
     {
@@ -97,7 +97,6 @@ public class PlayerController : MonoBehaviour
         {
             isRunning = false;
         }
-
     }
 
     private void Rotate()
@@ -137,12 +136,25 @@ public class PlayerController : MonoBehaviour
         fruitPatchController = playerInteracton.GetFruitPatchController();
         grinderController = playerInteracton.GetGrinderController();
         juiceMakerController = playerInteracton.GetJuiceMakerController();
-
-
-        //juiceMakerController = juiceMakerSpotController; // for test
-
-
+        sellingTableController = playerInteracton.GetSellingTableController();
         bool isCollectingJuice = playerInteracton.IsCollectingJuice();
+
+        if (Input.GetKeyDown(KeyCode.O))  // to sstart the juice maker
+        {
+            collectedGrindedFruitList.Add(new GameObject());
+            StartCoroutine(AddGrindedFruitIntoJuiceMakerCoroutine());
+        }
+
+        if (Input.GetKeyDown(KeyCode.T)) // to remove random juicee on JuiceOnTable List
+        {
+            int randomIndex = Random.Range(0, sellingTableController.juiceOnTable.Count);
+    
+            if (sellingTableController.juiceOnTable[randomIndex] != null)
+            {
+                Destroy(sellingTableController.juiceOnTable[randomIndex]);
+                sellingTableController.juiceOnTable[randomIndex] = null;
+            }
+        }
         
         if (CanCollectFruit())
         {
@@ -154,22 +166,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (juiceMakerController != null)
+        if (juiceMakerController != null && !isCollectingJuice)
         {
-            if (playerInteracton.IsCollectingJuice() == true)
+            if (CanDropOnJuiceMaker())
             {
-                if (CanPickUpFromJuiceMaker())
-                {
-                    collectJuiceCoroutine = StartCoroutine(CollectJuiceCoroutine());
-                }
+                StartCoroutine(AddGrindedFruitIntoJuiceMakerCoroutine());
+                isHolding = false;
             }
-            else
+        }
+
+        if (juiceMakerController != null && isCollectingJuice)
+        {
+            if (CanPickUpFromJuiceMaker())
             {
-                if (CanDropOnJuiceMaker())
-                {
-                    addGrindedFruitIntoJuiceMakerCoroutine = StartCoroutine(AddGrindedFruitIntoJuiceMakerCoroutine());
-                    isHolding = false;
-                }
+                StartCoroutine(CollectJuiceCoroutine());
             }
         }
 
@@ -188,6 +198,15 @@ public class PlayerController : MonoBehaviour
         {
             collectJuiceCoroutine = StartCoroutine(CollectJuiceCoroutine());
         }    
+
+        if (CanPlaceJuiceOnSellingTable())
+        {
+            if (placeJuiceOnSellingTableCoroutine == null)
+            {
+                placeJuiceOnSellingTableCoroutine = StartCoroutine(PlaceJuiceOnSellingTableCoroutine());
+                isHolding = false;
+            }
+        }
     }
 
     #region Fruit Patch
@@ -245,7 +264,6 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
     }
-
     #endregion
 
     #region Grinder
@@ -298,7 +316,6 @@ public class PlayerController : MonoBehaviour
             isAddFruitIntoGrinderCoroutineRunning = false;
         }     
     }
-
     #endregion
 
     #region Grinded Fruits
@@ -355,19 +372,14 @@ public class PlayerController : MonoBehaviour
                 //     yield return null;
                 // }
 
-                
-                
             }
             /* else
              {
                  yield return null;
              }*/
             yield return null;
-
-            
         }
     }
-
     #endregion
 
     #region Juice Maker
@@ -394,8 +406,6 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
-
-
 
     public IEnumerator CollectJuiceCoroutine()
     {
@@ -460,27 +470,43 @@ public class PlayerController : MonoBehaviour
             isAddGrindedFruitIntoJuiceMakerCoroutineRunning = false;
         }
     }
-
     #endregion
 
-    /* public IEnumerator AddJuiceOnTheSellingTable()
-     {
-         if (collectedJuiceList.Count > 0)
-         {
-             Vector3 sellingTablePosition = sellingTable.transform.position;
+    #region Selling Table
+    public bool CanPlaceJuiceOnSellingTable()
+    {
+        return sellingTableController;
+    }
 
-             while (collectedJuiceList.Count > 0)
-             {
-                 GameObject lastJuice = collectedJuiceList[collectedJuiceList.Count-1];
+    public IEnumerator PlaceJuiceOnSellingTableCoroutine()
+    {
+        while (collectedJuiceList.Count > 0 && sellingTableController != null)
+        {
+            GameObject lastJuice = collectedJuiceList[collectedJuiceList.Count -1];
+            int emptySlot = sellingTableController.EmptySlot();
 
-                 if (sellingTableController.CanPutJuiceOnSellingTable())
-                 {
-                     lastJuice.transform.DOMove(sellingTablePosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(() =>
-                     {
+            Vector3 targetPosition = sellingTableController.sellingSlots[emptySlot].position;
+            
+            if (sellingTableController != null && sellingTableController.CanPlaceJuice()) 
+            {   
+                collectedJuiceList.RemoveAt(collectedJuiceList.Count - 1);
 
-                     });
-                 }
-             }
-         }
-     } */
+                sellingTableController.juiceOnTable[emptySlot] = lastJuice; 
+
+                lastJuice.transform.DOMove(targetPosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(()  =>
+                {
+                    lastJuice.transform.SetParent(sellingTableController.sellingSlots[emptySlot].transform); 
+                }); 
+
+                yield return new WaitForSeconds(0.8f);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        placeJuiceOnSellingTableCoroutine = null;
+    }
+    #endregion
 }
