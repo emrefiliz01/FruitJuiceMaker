@@ -5,7 +5,10 @@ using UnityEngine;
 public class SellingTableController : MonoBehaviour
 {
     public List<Transform> sellingSlots;
+    
     public List<GameObject> juiceOnTable;
+
+    public List<GameObject> customerStopSlots;
 
     public bool CanPlaceJuice()
     {
@@ -28,7 +31,7 @@ public class SellingTableController : MonoBehaviour
             {
                 return i;
             }
-        } 
+        }
         return 0;
     }
 }

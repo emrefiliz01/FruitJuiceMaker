@@ -48,6 +48,7 @@ public class PlayerInteracton : MonoBehaviour
             Debug.Log("You entered thee Juice Maker Output");
             juiceMakerController = other.GetComponentInParent<JuiceMakerController>();
             isCollectingJuice = true;
+            juiceMakerController = other.transform.parent.GetComponent<JuiceMakerController>();
         }
 
         if (other.tag == "SellingTableSpot")

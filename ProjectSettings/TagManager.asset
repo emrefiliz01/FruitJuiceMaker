@@ -10,6 +10,8 @@ TagManager:
   - JuiceMakerOutput
   - JuiceMakerInput
   - SellingTableSpot
+  - CustomerSpot
+  - DecisionSpot
   layers:
   - Default
   - TransparentFX
