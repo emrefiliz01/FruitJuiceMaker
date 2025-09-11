@@ -23,4 +23,10 @@ public class FloatingJoystick : Joystick
         background.gameObject.SetActive(false);
         base.OnPointerUp(eventData);
     }
+
+    public Vector3 CameraDirection()
+    {
+        Vector3 input = Direction;
+        return Camera.main.transform.TransformDirection(input);
+    }
 }

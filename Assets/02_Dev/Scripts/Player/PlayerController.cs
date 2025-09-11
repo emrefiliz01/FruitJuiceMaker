@@ -82,14 +82,12 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float horizontal = joystick.Horizontal;
-        float vertical = joystick.Vertical;
-
-        Vector3 moveDirection = new Vector3(horizontal, 0f, vertical);
+        Vector3 moveDirection = joystick.CameraDirection();
+        moveDirection.y = 0f;
 
         rb.velocity = moveDirection * moveSpeed;
 
-        if ((horizontal != 0f || vertical != 0f))
+        if (moveDirection.x != 0f || moveDirection.z != 0f)
         {
             isRunning = true;
         }
@@ -419,15 +417,17 @@ public class PlayerController : MonoBehaviour
 
                 Vector3 localEndPos = new Vector3(0, collectedJuiceList.Count * 1f, 0);
 
+                Debug.Log("entered the OnComplete");
+                juiceMakerController.juiceList.Remove(lastJuice);
+
+                if (!collectedJuiceList.Contains(lastJuice))
+                {
+                    collectedJuiceList.Add(lastJuice);
+                }
+
                 lastJuice.transform.DOLocalMove(localEndPos, 1f).SetEase(Ease.OutQuart).OnComplete(() =>
                 {
-                    Debug.Log("entered the OnComplete");
-                    juiceMakerController.juiceList.Remove(lastJuice);
-
-                    if (!collectedJuiceList.Contains(lastJuice))
-                    {
-                        collectedJuiceList.Add(lastJuice);
-                    }
+                    
                     isHolding = true;
                 });
 

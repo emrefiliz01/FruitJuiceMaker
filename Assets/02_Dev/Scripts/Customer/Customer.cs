@@ -12,6 +12,7 @@ public class Customer : MonoBehaviour
     private CustomerManager customerManager;
     private Vector3 decisionSpot;
     private Coroutine customerMoveCoroutine;
+    private CurrencyManager currencyManager;
 
     private bool hasEntered = false;
     private int randomSlot;
@@ -77,26 +78,24 @@ public class Customer : MonoBehaviour
             targetPos = stopPos;
             canMove = true;
 
-            CustomerMove();
-            
+            CustomerMoveAndRotate();
+
         }
         else
         {
-            MoveToExit();
+            targetPos = customerManager.customerExitPoint.transform.position;
+            canMove = true;
+
+            StartCoroutine(WaitAndDestroy());
         }
     }
 
-    private void MoveToExit()
+    private void CustomerMoveAndRotate()
     {
-        StartCoroutine(MoveToExitCoroutine());
+        customerMoveCoroutine = StartCoroutine(CustomerMoveAndRotateCoroutine());
     }
 
-    private void CustomerMove()
-    {
-        customerMoveCoroutine = StartCoroutine(CustomerMoveCoroutine());
-    }
-
-    private IEnumerator CustomerMoveCoroutine()
+    private IEnumerator CustomerMoveAndRotateCoroutine()
     {
         while (canMove)
         {
@@ -104,22 +103,14 @@ public class Customer : MonoBehaviour
         }
 
         transform.DORotate(new Vector3(0, 90f, 0), 1f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
 
-        GameObject juice = sellingTableController.juiceOnTable[randomSlot];
-        Debug.Log(juice.transform.name);
-        sellingTableController.juiceOnTable[randomSlot] = null;
-        Destroy(juice);
+        CollectJuice();
         yield return new WaitForSeconds(1f);
 
         transform.DORotate(new Vector3(0, 180f, 0), 1f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
 
-        MoveToExit();
-    }
-
-    private IEnumerator MoveToExitCoroutine()
-    {
         targetPos = customerManager.customerExitPoint.transform.position;
         canMove = true;
 
@@ -128,7 +119,28 @@ public class Customer : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
+    private void CollectJuice()
+    {
+        GameObject juice = sellingTableController.juiceOnTable[randomSlot];
+        Debug.Log(juice.transform.name);
+
+        Juice juiceScript = juice.GetComponent<Juice>();
+        int juicePrice = juiceScript.juiceSO.juicePrice;
+        CurrencyManager.Instance.IncreaseMoney(juicePrice);
+        sellingTableController.juiceOnTable[randomSlot] = null;
+        Destroy(juice);
+    }
+
+    private IEnumerator WaitAndDestroy()
+    {
+        while (canMove)
+        {
+            yield return null;  
+        }
+
         Destroy(gameObject);
     }
 }

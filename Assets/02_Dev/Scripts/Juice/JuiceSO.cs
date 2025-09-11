@@ -7,5 +7,6 @@ using UnityEngine;
 public class JuiceSO : ScriptableObject
 {
     public int juiceCapacity;
+    public int juicePrice;
     public GameObject juicePrefab;
 }

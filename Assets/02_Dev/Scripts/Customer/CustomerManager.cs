@@ -11,6 +11,11 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] private SellingTableController sellingTableController;
     public GameObject customerExitPoint;
 
+    void Start()
+    {
+        StartCoroutine(SpawnCustomerCorouitne());
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
@@ -30,5 +35,15 @@ public class CustomerManager : MonoBehaviour
     public SellingTableController GetSellingTableController()
     {
         return sellingTableController;
+    }
+
+    private IEnumerator SpawnCustomerCorouitne()
+    {
+        while (true)
+        {
+            SpawnAndMoveCustomer();
+            yield return new WaitForSeconds(6f);
+        }
+        
     }
 }

@@ -36,13 +36,12 @@ public class JuiceMakerController : MonoBehaviour
         if (isJuicing)
         {
             return;
-        }
+        }   
         isJuicing = true;
         SetJuiceMakerImageStatus(true);
 
         juiceMakerCoroutine = StartCoroutine(JuiceMakerTimerCoroutine());
     }
-
 
 
     private IEnumerator JuiceMakerTimerCoroutine()
@@ -134,6 +133,9 @@ public class JuiceMakerController : MonoBehaviour
         if (juiceList.Count < JuiceSO.juiceCapacity)
         {
             GameObject juice = Instantiate(JuiceSO.juicePrefab, juiceSpawnPoint.transform.position + new Vector3(-1 * juiceList.Count, 0, 0), Quaternion.identity);
+
+            Juice juiceScript = juice.GetComponent<Juice>();
+            juiceScript.juiceSO = JuiceSO;
 
             juice.transform.SetParent(juiceSpawnPoint.transform);
 
