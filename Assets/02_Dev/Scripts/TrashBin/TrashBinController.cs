@@ -55,6 +55,6 @@ public class TrashBinController : MonoBehaviour
         playerController.collectedJuiceList.Clear();
         #endregion
 
-        playerController.isHolding = false;
+        // playerController.isHoslding = false;
     }
 }

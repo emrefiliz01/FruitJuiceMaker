@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     private PlayerController playerController;
     private Animator animator;
     private Rigidbody rb;
-    private bool isRunning;
-    public bool isHolding;
+    public bool isRunning = false;
+    private bool isHolding = false;
     #endregion
 
     #region Patch Settings
@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator= playerModel.GetComponent<Animator>();
-        
+        animator = playerModel.GetComponent<Animator>();
+
         fruitSpawnPosition = playerModel.transform;
     }
 
@@ -105,28 +105,72 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool IsPlayerHoldingItem()
+    {
+        if (collectedFruitList.Count > 0) return true;
+        if (collectedGrindedFruitList.Count > 0) return true;
+        if (collectedJuiceList.Count > 0) return true;
+
+        return false;
+    }
+
     private void ChangeAnimation()
     {
-        if (isHolding)
-        {
-            animator.SetBool("isHolding", true);
-        }
-        else
-        {
-            animator.SetBool("isHolding", false);
-        }
-
-
         if (isRunning)
         {
-            animator.SetBool("isRunning", true);
-            animator.SetBool("isIdle", false);
+            animator.SetBool("isHolding", false);
+
+            if (IsPlayerHoldingItem())
+            {
+                animator.SetBool("isRunning", false);
+                animator.SetBool("isHoldAndRun", true);
+            }
+            else
+            {
+                animator.SetBool("isHoldAndRun", false);
+                animator.SetBool("isRunning", true);
+            }
         }
         else
         {
             animator.SetBool("isRunning", false);
-            animator.SetBool("isIdle", true);
+            animator.SetBool("isHoldAndRun", false);
+
+            if (IsPlayerHoldingItem())
+            {
+                animator.SetBool("isHolding", true);
+            }
+            else
+            {
+                animator.SetBool("isHolding", false);
+            }
         }
+
+
+
+
+
+
+        // if (isHolding)
+        // {
+        //     animator.SetBool("isHolding", true);
+        // }
+        // else
+        // {
+        //     animator.SetBool("isHolding", false);
+        // }
+
+
+        // if (isRunning)
+        // {
+        //     animator.SetBool("isRunning", true);
+        //     animator.SetBool("isIdle", false);
+        // }
+        // else
+        // {
+        //     animator.SetBool("isRunning", false);
+        //     animator.SetBool("isIdle", true);
+        // }
     }
     private void Update()
     {
@@ -451,7 +495,7 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject lastGrindedFruit = collectedGrindedFruitList[collectedGrindedFruitList.Count - 1];
 
-                if (juiceMakerController.CanAddGrindedFruit())
+                if (juiceMakerController != null && juiceMakerController.CanAddGrindedFruit())
                 {
                     lastGrindedFruit.transform.DOMove(juiceMakerPosition, 0.5f).SetEase(Ease.OutQuart).OnComplete(() =>
                     {
