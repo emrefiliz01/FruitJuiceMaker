@@ -130,7 +130,7 @@ public class Customer : MonoBehaviour
         Juice juiceScript = juice.GetComponent<Juice>();
         int juicePrice = juiceScript.juiceSO.juicePrice;
         CurrencyManager.Instance.IncreaseMoney(juicePrice);
-        FindObjectOfType<DollarFlyer>().FlyDollar();
+        FindObjectOfType<DollarFlyer>().FlyDollar(sellingTableController.dollarSpawnPoint);
         
         sellingTableController.juiceOnTable[randomSlot] = null;
         Destroy(juice);

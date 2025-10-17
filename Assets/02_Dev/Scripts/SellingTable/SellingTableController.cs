@@ -10,6 +10,8 @@ public class SellingTableController : MonoBehaviour
 
     public List<GameObject> customerStopSlots;
 
+    public Transform dollarSpawnPoint;
+
     public bool CanPlaceJuice()
     {
         for (int i = 0; i < juiceOnTable.Count; i++)
