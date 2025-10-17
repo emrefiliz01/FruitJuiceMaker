@@ -37,6 +37,6 @@ public class CurrencyManager : MonoBehaviour
 
     private void UpdateMoney()
     {
-        moneyText.text = "Money: " + currentMoney;
+        moneyText.text = "" + currentMoney;
     }
 }

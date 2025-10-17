@@ -11,13 +11,23 @@ public class DollarFlyer : MonoBehaviour
     public RectTransform moneyTarget;
     public Camera mainCam;
 
+    public float spawnRadius = 1f;
+
     public void FlyDollar(Transform spawnPoint)
     {
-        GameObject dollar3D = Instantiate(dollarWorldPrefab, spawnPoint.position, Quaternion.identity);
+        for (int i = 0; i < 5; i++)
+        {
+            Vector3 randomPos = spawnPoint.position + new Vector3(
+                Random.Range(-spawnRadius, spawnRadius),
+                Random.Range(-spawnRadius, spawnRadius),
+                Random.Range(-spawnRadius, spawnRadius));
 
-        StartCoroutine(FlyDollarUICoroutine(dollar3D));
+            GameObject dollar3D = Instantiate(dollarWorldPrefab, randomPos, Quaternion.identity);
 
-        Destroy(dollar3D, 0.4f);
+            StartCoroutine(FlyDollarUICoroutine(dollar3D));
+
+            Destroy(dollar3D, 0.4f);
+        }
     }
 
     private IEnumerator FlyDollarUICoroutine(GameObject dollar3D)

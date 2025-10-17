@@ -9916,7 +9916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1121, y: -96}
+  m_AnchoredPosition: {x: 1084, y: -96}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &677221629
@@ -26839,6 +26839,7 @@ MonoBehaviour:
   canvasRoot: {fileID: 443735972}
   moneyTarget: {fileID: 677221628}
   mainCam: {fileID: 963194227}
+  spawnRadius: 1
 --- !u!4 &1679646908
 Transform:
   m_ObjectHideFlags: 0
@@ -35634,6 +35635,10 @@ PrefabInstance:
     - target: {fileID: 2678229896162766186, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_Name
       value: FlyingDollarIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678229896162766186, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_Pivot.x
