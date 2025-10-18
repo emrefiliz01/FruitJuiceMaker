@@ -9916,7 +9916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1084, y: -96}
+  m_AnchoredPosition: {x: 1167, y: -96}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &677221629
@@ -9969,7 +9969,7 @@ MonoBehaviour:
   m_fontSize: 50
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -10002,7 +10002,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -21.079285, w: 0}
+  m_margin: {x: 10.089539, y: 0, z: 33.772522, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -35632,6 +35632,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 443735972}
     m_Modifications:
+    - target: {fileID: 713414725435889635, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cc939a6b9d34a7d45b6d1c3a8e5a3b1e, type: 3}
     - target: {fileID: 2678229896162766186, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_Name
       value: FlyingDollarIcon
@@ -35666,11 +35670,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 78
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 78
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -35702,11 +35706,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1110
+      value: 1022.7
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -110
+      value: -97
       objectReference: {fileID: 0}
     - target: {fileID: 4328079671446063957, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
