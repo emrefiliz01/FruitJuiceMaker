@@ -13,11 +13,11 @@ public class DollarFlyer : MonoBehaviour
 
     public float spawnRadius = 1f;
 
-    public void FlyDollar(Transform spawnPoint)
+    public void FlyDollar(Vector3 spawnPoint)
     {
         for (int i = 0; i < 5; i++)
         {
-            Vector3 randomPos = spawnPoint.position + new Vector3(
+            Vector3 randomPos = spawnPoint + new Vector3(
                 Random.Range(-spawnRadius, spawnRadius),
                 Random.Range(-spawnRadius, spawnRadius),
                 Random.Range(-spawnRadius, spawnRadius));
