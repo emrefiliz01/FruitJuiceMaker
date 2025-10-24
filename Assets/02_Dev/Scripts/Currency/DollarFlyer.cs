@@ -5,58 +5,34 @@ using System.Collections;
 
 public class DollarFlyer : MonoBehaviour
 {
-    public GameObject dollarWorldPrefab;
     public GameObject dollarUIPrefab;
     public RectTransform canvasRoot;
     public RectTransform moneyTarget;
-    public Camera mainCam;
 
-    public float spawnRadius = 1f;
 
     public void FlyDollar(Vector3 spawnPoint)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            Vector3 randomPos = spawnPoint + new Vector3(
-                Random.Range(-spawnRadius, spawnRadius),
-                Random.Range(-spawnRadius, spawnRadius),
-                Random.Range(-spawnRadius, spawnRadius));
-
-            GameObject dollar3D = Instantiate(dollarWorldPrefab, randomPos, Quaternion.identity);
-
-            StartCoroutine(FlyDollarUICoroutine(dollar3D));
-
-            Destroy(dollar3D, 0.4f);
-        }
+    {  
+        StartCoroutine(FlyDollarUICoroutine());
     }
 
-    private IEnumerator FlyDollarUICoroutine(GameObject dollar3D)
+    private IEnumerator FlyDollarUICoroutine()
     {
-        GameObject dollarUI = Instantiate(dollarUIPrefab, canvasRoot);
-        RectTransform dollarRect = dollarUI.GetComponent<RectTransform>();
+        Vector2 targetPos = moneyTarget.anchoredPosition;
 
-        float maxDuration = 0.5f;
-        float timer = 0f;
-
-        Vector2 screenTargetPos = RectTransformUtility.WorldToScreenPoint(null, moneyTarget.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRoot, screenTargetPos, null, out Vector2 localTargetPos);
-
-        while (dollar3D != null && timer < maxDuration)
+        for (int i = 0; i < 5; i++)
         {
-            Vector3 screenPos = mainCam.WorldToScreenPoint(dollar3D.transform.position);
+            GameObject dollarUI = Instantiate(dollarUIPrefab, canvasRoot);
+            RectTransform dollarRect = dollarUI.GetComponent<RectTransform>();
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRoot, screenPos, null, out Vector2 uiPos);
+            dollarRect.anchoredPosition = Vector2.zero;
 
-            dollarRect.anchoredPosition = uiPos;
-
-            timer += Time.deltaTime;
+            dollarRect.DOAnchorPos(targetPos, 0.7f).SetEase(Ease.InOutQuad).OnComplete(() =>
+            {
+                Destroy(dollarUI);
+            });
 
             yield return null;
+        
         }
-
-        dollarRect.DOAnchorPos(localTargetPos, 0.7f).SetEase(Ease.InOutQuad).OnComplete(() =>
-        {
-            Destroy(dollarUI);
-        });
     }
 }

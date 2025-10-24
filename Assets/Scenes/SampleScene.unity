@@ -26834,12 +26834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba928b3fd6f8c1348b368f29f94487c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dollarWorldPrefab: {fileID: 7395699172023347503, guid: 1155bf6527efafb418e8a4f9375138df, type: 3}
   dollarUIPrefab: {fileID: 2678229896162766186, guid: b3775ec622edbfd45891261759d35fcc, type: 3}
   canvasRoot: {fileID: 443735972}
-  moneyTarget: {fileID: 677221628}
-  mainCam: {fileID: 963194227}
-  spawnRadius: 1
+  moneyTarget: {fileID: 8749026431824002125}
 --- !u!4 &1679646908
 Transform:
   m_ObjectHideFlags: 0
