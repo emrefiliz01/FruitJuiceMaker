@@ -26,13 +26,16 @@ public class DollarFlyer : MonoBehaviour
 
             dollarRect.anchoredPosition = Vector2.zero;
 
-            dollarRect.DOAnchorPos(targetPos, 0.7f).SetEase(Ease.InOutQuad).OnComplete(() =>
+            Vector2 randomPos = new Vector2(Random.Range(-70, 70), Random.Range(-70, 70));
+            dollarRect.DOAnchorPos(randomPos, 0.4f).SetEase(Ease.InOutQuad).OnComplete(() =>
             {
-                Destroy(dollarUI);
+                dollarRect.DOAnchorPos(targetPos, 0.7f).SetEase(Ease.InOutQuad).OnComplete(() =>
+                {
+                    Destroy(dollarUI);
+                });
             });
-
+            
             yield return null;
-        
         }
     }
 }
